@@ -1,0 +1,744 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Autorías peruanas y paper mills</title>
+<meta name="description" content="53 publicaciones con autoría peruana coinciden con títulos cuya autoría se vendía en redes sociales. Datos verificados a mano a partir de Abalkina et al. (2026) y OpenAlex.">
+<meta property="og:title" content="Autorías peruanas y paper mills">
+<meta property="og:description" content="53 publicaciones con autoría peruana coinciden con títulos cuya autoría se vendía en redes sociales; 33 ya fueron retractadas.">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Source+Serif+4:opsz,wght@8..60,400&display=swap">
+<style>
+/* Página estática: tokens propios que sustituyen a los del visor de dashboards. Tema claro por defecto, oscuro según el sistema. */
+:root {
+  --color-bg: #f6f7f9; --color-panel: #ffffff; --color-fg: #16181d; --color-fg-muted: #5a6070; --color-border-line: #e0e3e9;
+  --color-ok: #1f7a4d; --color-warn: #a36500; --color-bad: #b42318;
+  --c-peru: #1f5fbf; --c-india: #c96a1f;
+  --cds-chart-muted: #b7bdc8; --cds-chart-status-critical: #d6452f; --cds-chart-grid: #eceef2; --cds-chart-axis: #c3c8d1;
+  --cds-text-secondary: #5a6070; --cds-surface-popover: #ffffff; --cds-border: #d8dce3; --cds-shadow-popover: 0 6px 20px rgba(20, 24, 33, .12);
+  --font-anthropic-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-anthropic-serif: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --cds-font-size-caption: .8125rem; --cds-font-size-body: 1rem; --cds-font-size-heading: 1.0625rem; --cds-font-size-title: 1.75rem; --cds-font-weight-medium: 600;
+  --cds-gap-xs: 4px; --cds-gap-sm: 8px; --cds-gap-md: 16px; --cds-gap-lg: 24px; --cds-gap-xl: 40px;
+  --cds-pad-sm: 8px; --cds-pad-md: 14px; --cds-pad-lg: 20px; --cds-radius: 10px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg: #121418; --color-panel: #1b1e24; --color-fg: #eceef2; --color-fg-muted: #a0a6b3; --color-border-line: #2c3039;
+    --color-ok: #4cc38a; --color-warn: #e0a43a; --color-bad: #ff7a6b;
+    --c-peru: #5b9bff; --c-india: #f0954a;
+    --cds-chart-muted: #4a505c; --cds-chart-status-critical: #ef5b45; --cds-chart-grid: #262a32; --cds-chart-axis: #3a3f4a;
+    --cds-text-secondary: #a0a6b3; --cds-surface-popover: #22262e; --cds-border: #353a45; --cds-shadow-popover: 0 6px 20px rgba(0, 0, 0, .45);
+    color-scheme: dark;
+  }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--color-bg); color: var(--color-fg); font-family: var(--font-anthropic-sans); font-size: 15px; line-height: 1.45; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-block: 32px 48px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+a { color: inherit; }
+.dash-select { font: inherit; font-size: var(--cds-font-size-caption); color: var(--color-fg); background-color: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: 6px; padding: 4px 8px; }
+:focus-visible { outline: 2px solid var(--c-peru); outline-offset: 2px; }
+.site-foot { margin-top: var(--cds-gap-xl); font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); display: grid; gap: 4px; }
+.site-foot p { margin: 0; }
+@media (max-width: 520px) { :root { --cds-font-size-title: 1.45rem; } }
+
+.pe { display: grid; gap: var(--cds-gap-xl); font-family: var(--font-anthropic-sans); color: var(--color-fg); }
+.pe-head { display: grid; gap: var(--cds-gap-sm); }
+.pe-eyebrow { margin: 0; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); letter-spacing: .06em; text-transform: uppercase; }
+.pe-title { margin: 0; font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); text-wrap: balance; }
+.pe-lede { margin: 0; max-width: 72ch; line-height: 1.55; font-size: var(--cds-font-size-body); }
+.pe-lede b { font-variant-numeric: tabular-nums; }
+.pe-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 170px), 1fr)); gap: var(--cds-gap-md); }
+@media (max-width: 520px) { .pe-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--cds-gap-sm); } .pe-kpis .pe-card { padding: var(--cds-pad-md); } .pe-kv { font-size: 1.75rem; } #kpi-publicaciones { grid-column: 1 / -1; } }
+.pe-card { background: var(--color-panel); border: 1px solid var(--color-border-line); border-radius: var(--cds-radius); padding: var(--cds-pad-lg); min-width: 0; display: grid; gap: var(--cds-gap-sm); align-content: start; }
+.pe-kl { margin: 0; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.pe-kv { margin: 0; font-family: var(--font-anthropic-serif); font-weight: 400; font-size: 2.25rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.pe-kv-bad { color: var(--color-bad); }
+.pe-ks { margin: 0; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); line-height: 1.4; }
+.pe-sec { display: grid; gap: var(--cds-gap-md); }
+.pe-sec-h { margin: 0; font-family: var(--font-anthropic-serif); font-weight: 400; font-size: var(--cds-font-size-title); text-wrap: balance; }
+.pe-sec-p { margin: 0; max-width: 72ch; line-height: 1.55; }
+.pe-sec-p b { font-variant-numeric: tabular-nums; }
+.pe-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: var(--cds-gap-md); }
+.pe-grid-2 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); }
+.pe-h { margin: 0; font-size: var(--cds-font-size-heading); font-weight: var(--cds-font-weight-medium); text-wrap: balance; }
+.pe-note { margin: 0; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); line-height: 1.45; max-width: 72ch; }
+.pe-chart { position: relative; min-height: 160px; }
+.pe-chart svg { display: block; overflow: visible; }
+.pe-chart text { font-size: var(--cds-font-size-caption); fill: var(--cds-text-secondary); font-family: var(--font-anthropic-sans); }
+.pe-chart text.pe-bl { fill: var(--color-fg); }
+.pe-chart text.pe-bv, .pe-chart text.pe-tot { fill: var(--color-fg); font-variant-numeric: tabular-nums; }
+.pe-empty { margin: 0; padding: var(--cds-pad-lg) 0; color: var(--color-fg-muted); font-size: var(--cds-font-size-caption); }
+.pe-legend { display: flex; flex-wrap: wrap; gap: var(--cds-gap-md); margin: 0; padding: 0; list-style: none; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.pe-legend li { display: flex; align-items: center; gap: 6px; }
+.pe-sw { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+.pe-sw-crit { background: var(--cds-chart-status-critical); }
+.pe-sw-muted { background: var(--cds-chart-muted); }
+.pe-tip { position: absolute; z-index: 5; pointer-events: none; max-width: 260px; background: var(--cds-surface-popover); border: 1px solid var(--cds-border); box-shadow: var(--cds-shadow-popover); border-radius: var(--cds-radius); padding: 6px 10px; font-size: var(--cds-font-size-caption); color: var(--cds-text-secondary); line-height: 1.4; }
+.pe-tip-h { color: var(--color-fg); font-weight: var(--cds-font-weight-medium); }
+.pe-press ul { margin: 0; padding-left: 1.2em; display: grid; gap: var(--cds-gap-xs); line-height: 1.5; max-width: 72ch; }
+.pe-press li b { font-variant-numeric: tabular-nums; }
+.pe-filters { display: flex; flex-wrap: wrap; gap: var(--cds-gap-sm); align-items: center; }
+.pe-filters label { font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); display: flex; gap: 6px; align-items: center; }
+.pe-tablebox { overflow-x: auto; }
+.pe-table { width: 100%; border-collapse: collapse; font-size: var(--cds-font-size-caption); min-width: 900px; }
+.pe-table th { text-align: left; font-weight: var(--cds-font-weight-medium); color: var(--color-fg-muted); padding: 8px 10px; border-bottom: 1px solid var(--color-border-line); white-space: nowrap; }
+.pe-table td { padding: 8px 10px; border-bottom: 1px solid var(--color-border-line); vertical-align: top; line-height: 1.4; }
+.pe-table td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.pe-table td.pe-tit { min-width: 280px; }
+.pe-table td.pe-inst { min-width: 200px; }
+.pe-table td.pe-cong { min-width: 120px; }
+.pe-table a { color: var(--color-fg); text-underline-offset: 2px; }
+.pe-pill { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: var(--cds-font-size-caption); white-space: nowrap; border: 1px solid var(--color-border-line); color: var(--color-fg-muted); }
+.pe-pill-bad { color: var(--color-bad); border-color: var(--color-bad); }
+.pe-foot summary { cursor: pointer; font-size: var(--cds-font-size-caption); color: var(--color-fg-muted); }
+.pe-foot div { display: grid; gap: var(--cds-gap-sm); padding-top: var(--cds-pad-sm); }
+[data-dash-source-state=refreshing] { opacity: .5; }
+
+</style>
+</head>
+<body>
+<main class="wrap" id="dash-root">
+<div class="pe">
+  <header class="pe-head" id="encabezado">
+    <p class="pe-eyebrow">Integridad científica · Perú · Venta de autorías</p>
+    <h1 class="pe-title">Autorías peruanas en artículos ofrecidos por paper mills</h1>
+    <p class="pe-lede"><b data-draw="num" data-source="resumen" data-field="publicaciones" data-row="0">—</b> publicaciones científicas con al menos un autor afiliado a una institución peruana coinciden con títulos cuya autoría se ofrecía en venta en redes sociales. Suman <b data-draw="num" data-source="resumen" data-field="autorias" data-row="0">—</b> autorías de <b data-draw="num" data-source="resumen" data-field="personas" data-row="0">—</b> personas y <b data-draw="num" data-source="resumen" data-field="instituciones" data-row="0">—</b> instituciones peruanas. <b data-draw="num" data-source="resumen" data-field="retractadas" data-row="0">—</b> de esas publicaciones (<b data-draw="num" data-fmt="pct" data-source="resumen" data-field="pct_retractadas" data-row="0">—</b>) ya fueron retractadas.</p>
+  </header>
+
+  <section class="pe-kpis" id="cifras">
+    <div class="pe-card" id="kpi-publicaciones">
+      <p class="pe-kl">Publicaciones con autoría peruana</p>
+      <p class="pe-kv" data-draw="num" data-source="resumen" data-field="publicaciones" data-row="0">—</p>
+      <p class="pe-ks"><span data-draw="num" data-source="resumen" data-field="ieee" data-row="0">—</span> en congresos IEEE y <span data-draw="num" data-source="resumen" data-field="otras" data-row="0">—</span> en otras editoriales · 2021–2025</p>
+    </div>
+    <div class="pe-card" id="kpi-autorias">
+      <p class="pe-kl">Autorías peruanas</p>
+      <p class="pe-kv" data-draw="num" data-source="resumen" data-field="autorias" data-row="0">—</p>
+      <p class="pe-ks">De <span data-draw="num" data-source="resumen" data-field="personas" data-row="0">—</span> personas · <span data-draw="num" data-source="resumen" data-field="primer_autor" data-row="0">—</span> publicaciones con primer autor peruano</p>
+    </div>
+    <div class="pe-card" id="kpi-instituciones">
+      <p class="pe-kl">Instituciones peruanas</p>
+      <p class="pe-kv" data-draw="num" data-source="resumen" data-field="instituciones" data-row="0">—</p>
+      <p class="pe-ks">Universidades y entidades declaradas en la afiliación de los autores</p>
+    </div>
+    <div class="pe-card" id="kpi-retractadas">
+      <p class="pe-kl">Publicaciones retractadas</p>
+      <p class="pe-kv pe-kv-bad" data-draw="num" data-source="resumen" data-field="retractadas" data-row="0">—</p>
+      <p class="pe-ks"><span data-draw="num" data-fmt="pct" data-source="resumen" data-field="pct_retractadas" data-row="0">—</span> del total · <span data-draw="num" data-source="resumen" data-field="retractadas_2310" data-row="0">—</span> en un solo día, el 23/10/2026</p>
+    </div>
+    <div class="pe-card" id="kpi-oferta">
+      <p class="pe-kl">Días entre la oferta y el congreso</p>
+      <p class="pe-kv" data-draw="num" data-source="resumen" data-field="mediana_dias" data-row="0">—</p>
+      <p class="pe-ks">Mediana en las <span data-draw="num" data-source="resumen" data-field="con_oferta" data-row="0">—</span> publicaciones con fecha de oferta: la plaza de autor se anunciaba meses antes</p>
+    </div>
+  </section>
+
+  <section class="pe-sec" id="patron">
+    <h2 class="pe-sec-h">El patrón: equipos de seis con una plaza peruana</h2>
+    <p class="pe-sec-p">Ninguna de las publicaciones tiene solo autores peruanos: todas incluyen autores de India. <b data-draw="num" data-source="resumen" data-field="seis_autores" data-row="0">—</b> tienen exactamente seis autores, el tamaño que el estudio asocia a la venta de autorías, y <b data-draw="num" data-source="resumen" data-field="cinco_uno" data-row="0">—</b> responden a la misma combinación: cinco autores de India y uno de Perú.</p>
+    <div class="pe-grid">
+      <div class="pe-card" id="card-paises">
+        <h3 class="pe-h">Afiliaciones de los autores por país</h3>
+        <p class="pe-note">Todas las firmas de las publicaciones, revisadas en cada artículo. Un autor con dos afiliaciones cuenta dos veces.</p>
+        <div class="pe-chart" id="chart-paises" data-draw="paises" data-source="por_pais"></div>
+      </div>
+      <div class="pe-card" id="card-equipo">
+        <h3 class="pe-h">Número de autores por publicación</h3>
+        <p class="pe-note">En rojo, el grupo de seis autores.</p>
+        <div class="pe-chart" id="chart-equipo" data-draw="equipo" data-source="por_tamano"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pe-sec" id="quienes">
+    <h2 class="pe-sec-h">Instituciones y personas</h2>
+    <p class="pe-sec-p">Las autorías se concentran en pocas personas: las tres con más publicaciones suman <b data-draw="num" data-source="resumen" data-field="top3_autorias" data-row="0">—</b> de las <b data-draw="num" data-source="resumen" data-field="autorias" data-row="0">—</b> autorías, mientras que <b data-draw="num" data-source="resumen" data-field="una_sola" data-row="0">—</b> personas aparecen en una sola publicación.</p>
+    <div class="pe-grid">
+      <div class="pe-card" id="card-instituciones">
+        <h3 class="pe-h">Autorías por institución peruana</h3>
+        <ul class="pe-legend"><li><span class="pe-sw pe-sw-crit"></span>En publicaciones retractadas</li><li><span class="pe-sw pe-sw-muted"></span>En publicaciones no retractadas</li></ul>
+        <div class="pe-chart" id="chart-instituciones" data-draw="instituciones" data-source="por_institucion"></div>
+      </div>
+      <div class="pe-card" id="card-personas">
+        <h3 class="pe-h">Autorías por persona: las diez primeras</h3>
+        <p class="pe-note">Cada persona tiene un código en lugar de su nombre. Figurar en estas publicaciones no prueba por sí solo que alguien comprara la autoría: la afiliación pudo añadirse sin su conocimiento.</p>
+        <div class="pe-chart" id="chart-personas" data-draw="personas" data-source="por_persona"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pe-sec" id="cuando-donde">
+    <h2 class="pe-sec-h">Cuándo y dónde se publicaron</h2>
+    <div class="pe-grid pe-grid-2">
+      <div class="pe-card" id="card-anio">
+        <h3 class="pe-h">Publicaciones por año</h3>
+        <ul class="pe-legend"><li><span class="pe-sw pe-sw-crit"></span>Retractadas</li><li><span class="pe-sw pe-sw-muted"></span>Sin retractar</li></ul>
+        <div class="pe-chart" id="chart-anio" data-draw="anio" data-source="por_anio"></div>
+      </div>
+      <div class="pe-card" id="card-editorial">
+        <h3 class="pe-h">Editorial</h3>
+        <p class="pe-note">Casi todas son ponencias en actas de congresos.</p>
+        <div class="pe-chart" id="chart-editorial" data-draw="editorial" data-source="por_editorial"></div>
+      </div>
+      <div class="pe-card" id="card-lugar">
+        <h3 class="pe-h">País donde se celebró el congreso</h3>
+        <p class="pe-note">Sin dato: congresos de otras editoriales y tres de IEEE sin sede registrada.</p>
+        <div class="pe-chart" id="chart-lugar" data-draw="lugar" data-source="por_lugar"></div>
+      </div>
+      <div class="pe-card" id="card-congresos">
+        <h3 class="pe-h">Congresos con más publicaciones</h3>
+        <p class="pe-note">Los diez primeros. La parte roja son las retractadas.</p>
+        <div class="pe-chart" id="chart-congresos" data-draw="congresos" data-source="por_congreso"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pe-card" id="contexto">
+    <h2 class="pe-h">Perú en el conjunto del estudio</h2>
+    <p class="pe-sec-p">Entre los artículos IEEE identificados en el estudio, Perú ocupa el puesto <b data-draw="num" data-source="latam_rank" data-field="puesto" data-row="0">—</b> en Latinoamérica, con <b data-draw="num" data-source="latam_rank" data-field="articulos_peru" data-row="0">—</b>; le sigue <b data-draw="num" data-source="latam_rank" data-field="siguiente" data-row="0">—</b>, con <b data-draw="num" data-source="latam_rank" data-field="articulos_siguiente" data-row="0">—</b>. Es el <b data-draw="num" data-fmt="pct" data-source="resumen" data-field="pct_ieee" data-row="0">—</b> de los <b data-draw="num" data-source="total_ieee" data-field="articulos_total" data-row="0">—</b> artículos IEEE identificados.</p>
+    <p class="pe-note">Perú con la revisión manual de cada artículo; los demás países según OpenAlex, sin revisión.</p>
+    <div class="pe-chart" id="chart-latam" data-draw="latam" data-source="paises_latam"></div>
+  </section>
+
+  <section class="pe-card pe-press" id="prensa">
+    <h2 class="pe-h">Cómo leer y citar estos datos</h2>
+    <ul>
+      <li>Las publicaciones coinciden con títulos cuya autoría se ofrecía en redes sociales, según el estudio de Abalkina, Kunešová, Ozturk y Pirelli (2026). La coincidencia no prueba que cada autor pagara por su plaza.</li>
+      <li>Las cifras son un mínimo: hay autorías sin país en OpenAlex que siguen en revisión y podrían sumar casos peruanos.</li>
+      <li>La afiliación peruana se comprobó en cada artículo, igual que el número de autores, los países de los coautores y la retractación.</li>
+      <li>No se publican nombres de autores. Fuente sugerida: «Análisis de autorías peruanas a partir de Abalkina et al. (2026) y OpenAlex, con revisión manual (noviembre de 2026)».</li>
+    </ul>
+    <p class="pe-note">Descarga los datos: <a href="datos/publicaciones_peru.csv">publicaciones (CSV)</a> · <a href="datos/autorias_peru.csv">autorías, sin nombres (CSV)</a> · <a href="datos/instituciones_peru.csv">instituciones (CSV)</a>.</p>
+  </section>
+
+  <section class="pe-card" id="tabla-articulos">
+    <h2 class="pe-h">Las publicaciones, una por una</h2>
+    <div class="pe-filters">
+      <label for="f-editor">Editorial
+        <select class="dash-select" id="f-editor" data-pe-filter="editor" aria-label="Editorial">
+          <option value="">Todas</option>
+          <option value="IEEE">IEEE</option>
+          <option value="Otros">Otras editoriales</option>
+        </select>
+      </label>
+      <label for="f-estado">Estado
+        <select class="dash-select" id="f-estado" data-pe-filter="estado" aria-label="Estado de retracción">
+          <option value="">Todas</option>
+          <option value="true">Retractadas</option>
+          <option value="false">Sin retractar</option>
+        </select>
+      </label>
+    </div>
+    <p class="pe-note">En el celular, desliza la tabla hacia los lados para ver todas las columnas.</p>
+    <div class="pe-tablebox">
+      <table class="pe-table" data-source="articulos" data-row-key="doi">
+        <thead><tr>
+          <th data-field="anio">Año</th>
+          <th data-field="editorial">Editorial</th>
+          <th data-field="congreso">Congreso o libro</th>
+          <th data-field="titulo">Título</th>
+          <th data-field="instituciones_peru">Instituciones peruanas</th>
+          <th data-field="paises_coautores">Autores por país</th>
+          <th data-field="retractado">Estado</th>
+          <th data-field="fecha_retractacion">Retractada el</th>
+        </tr></thead>
+        <tbody data-draw="tabla"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <details class="pe-foot" id="fuentes">
+    <summary>Fuentes y metodología</summary>
+    <div>
+      <p class="pe-note">Los títulos ofrecidos en venta y su emparejamiento con publicaciones proceden del material de Abalkina, Kunešová, Ozturk y Pirelli (2026), «Opening Pandora’s box: Paper mills in conference proceedings», Accountability in Research, reutilizado en el dashboard de Ángel M. Delgado-Vázquez (Universidad Pablo de Olavide). Las afiliaciones se tomaron de OpenAlex (consulta de noviembre de 2026) según la metodología publicada por Delgado-Vázquez. Licencia de los datos: CC BY-NC-SA 4.0.</p>
+      <p class="pe-note">Revisión manual (10/11/2026): en cada publicación se comprobaron la afiliación peruana de los autores que OpenAlex sitúa en Perú (no hubo falsos positivos), la editorial, el número de autores, el país de todos los coautores y la fecha de retractación. Al buscar Perú en las afiliaciones literales de OpenAlex apareció una autoría más, de la Universidad Tecnológica del Perú, que se incluye. Las variantes de escritura de un mismo nombre se unificaron para contar personas.</p>
+      <p class="pe-note">Días entre la oferta y el congreso: ambas fechas provienen del material suplementario de Abalkina y otros (2026), archivo IEEE.csv. La fecha de la oferta es la del anuncio de venta en redes sociales registrada por los autores del estudio (columna «Offer date»); la del congreso es la que Crossref tiene registrada para el congreso del artículo emparejado (columna «Crossref: Matched conference date»). La diferencia en días la calculamos para las publicaciones peruanas con el mismo criterio que el dashboard de Delgado-Vázquez. Solo existe para las publicaciones de IEEE, porque para las ofertas que terminaron en otras editoriales los datos preparados no incluyen fechas.</p>
+    </div>
+  </details>
+</div>
+<footer class="site-foot">
+  <p>Datos: Abalkina, Kunešová, Ozturk y Pirelli (2026); dashboard original de Ángel M. Delgado-Vázquez; afiliaciones de OpenAlex. Revisión manual de las autorías peruanas, noviembre de 2026. Datos bajo licencia CC BY-NC-SA 4.0.</p>
+  <p><a href="../">Ver el dashboard original sobre congresos IEEE</a></p>
+</footer>
+</main>
+<script src="../js/d3.v7.min.js"></script>
+<script>
+// Sustituto mínimo de la API del visor de dashboards: datos incrustados, cálculos y dibujos.
+(function () {
+  const RAW = {"articulos": [{"doi": "10.1109/i-smac52330.2021.9640851", "titulo": "Retracted: Impact of Strength Picture on Convolving with Regulation", "anio": 2021, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "I-SMAC 2021", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": true, "fecha_retractacion": "2026-10-23", "doi_aviso_retractacion": "10.1109/I-SMAC52330.2021.11752032", "paises_coautores": "IN 4, PE 1, US 1", "autores_india": 4, "autores_peru": 1, "autores_otros": 1, "autorias_peru": 1, "primer_autor_peru": false, "instituciones_peru": "Universidad Continental", "fecha_oferta": "2021-06-21", "plazas_oferta": ">=2", "dias_oferta_congreso": 143, "pais_congreso": null, "ciudad_congreso": null}, {"doi": "10.1109/iccike51210.2021.9410756", "titulo": "Retracted: Maximum Information Measure Policies in Reinforcement Learning with Deep Energy-Based Model", "anio": 2021, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "ICCIKE 2021", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": true, "fecha_retractacion": "2026-10-23", "doi_aviso_retractacion": "10.1109/ICCIKE51210.2021.11752653", "paises_coautores": "AE 3, IN 3, PE 1", "autores_india": 3, "autores_peru": 1, "autores_otros": 3, "autorias_peru": 1, "primer_autor_peru": false, "instituciones_peru": "Universidad Nacional Santiago Antúnez de Mayolo", "fecha_oferta": "2021-02-23", "plazas_oferta": ">=5", "dias_oferta_congreso": 22, "pais_congreso": null, "ciudad_congreso": null}, {"doi": "10.1109/iceca52323.2021.9675995", "titulo": "Retracted: Orthographic Comparison Revealed by Ambient Sentiment Classification", "anio": 2021, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "ICECA 2021", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": true, "fecha_retractacion": "2026-10-23", "doi_aviso_retractacion": "10.1109/ICECA52323.2021.11752735", "paises_coautores": "IN 5, PE 1", "autores_india": 5, "autores_peru": 1, "autores_otros": 0, "autorias_peru": 1, "primer_autor_peru": false, "instituciones_peru": "Catholic University of Santa María", "fecha_oferta": "2021-06-21", "plazas_oferta": ">=2", "dias_oferta_congreso": 164, "pais_congreso": "India", "ciudad_congreso": "Coimbatore"}, {"doi": "10.1109/ic3i56241.2022.10072499", "titulo": "Retracted: A Detailed Review of Implementation of Deep Learning Approaches for Industrial Internet of Things with the Different Opportunities and Challenges", "anio": 2022, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "IC3I 2022", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": true, "fecha_retractacion": "2026-07-14", "doi_aviso_retractacion": "10.1109/IC3I56241.2022.11611423", "paises_coautores": "IN 5, PE 1", "autores_india": 5, "autores_peru": 1, "autores_otros": 0, "autorias_peru": 1, "primer_autor_peru": false, "instituciones_peru": "Universidad Tecnológica del Perú", "fecha_oferta": "2022-08-28", "plazas_oferta": ">=4", "dias_oferta_congreso": 108, "pais_congreso": "India", "ciudad_congreso": "Greater Noida"}, {"doi": "10.1109/ic3i56241.2022.10072600", "titulo": "Retracted: Security Issues and Challenges in Internet of Things (IoT) System", "anio": 2022, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "IC3I 2022", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": true, "fecha_retractacion": "2026-10-23", "doi_aviso_retractacion": "10.1109/IC3I56241.2022.11752392", "paises_coautores": "IN 3, PE 2, ZA 1", "autores_india": 3, "autores_peru": 2, "autores_otros": 1, "autorias_peru": 2, "primer_autor_peru": true, "instituciones_peru": "Universidad San Ignacio de Loyola; Universidad Tecnológica del Perú", "fecha_oferta": "2022-08-01", "plazas_oferta": ">=4", "dias_oferta_congreso": 135, "pais_congreso": "India", "ciudad_congreso": "Greater Noida"}, {"doi": "10.1109/ic3i56241.2022.10072741", "titulo": "Retracted: Evaluation of Performance of Artificial Intelligence System during Voice Recognition in Social Conversation", "anio": 2022, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "IC3I 2022", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": true, "fecha_retractacion": "2026-10-23", "doi_aviso_retractacion": "10.1109/IC3I56241.2022.11752401", "paises_coautores": "IN 4, PE 1, US 1", "autores_india": 4, "autores_peru": 1, "autores_otros": 1, "autorias_peru": 1, "primer_autor_peru": true, "instituciones_peru": "Universidad Nacional del Altiplano", "fecha_oferta": "2022-08-20", "plazas_oferta": ">=3", "dias_oferta_congreso": 116, "pais_congreso": "India", "ciudad_congreso": "Greater Noida"}, {"doi": "10.1109/ic3i56241.2022.10072925", "titulo": "Retracted: Cloud Computing, Machine Learning, and Secure Data Sharing enabled through Blockchain", "anio": 2022, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "IC3I 2022", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": true, "fecha_retractacion": "2026-10-23", "doi_aviso_retractacion": "10.1109/IC3I56241.2022.11752408", "paises_coautores": "IN 5, PE 1", "autores_india": 5, "autores_peru": 1, "autores_otros": 0, "autorias_peru": 1, "primer_autor_peru": false, "instituciones_peru": "Universidad Tecnológica del Perú", "fecha_oferta": "2022-12-01", "plazas_oferta": ">=3", "dias_oferta_congreso": 13, "pais_congreso": "India", "ciudad_congreso": "Greater Noida"}, {"doi": "10.1109/ic3i56241.2022.10072980", "titulo": "Retracted: Machine Learning Adoption in Blockchain-Based Smart Applications", "anio": 2022, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "IC3I 2022", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": true, "fecha_retractacion": "2026-10-23", "doi_aviso_retractacion": "10.1109/IC3I56241.2022.11752410", "paises_coautores": "IN 5, PE 1", "autores_india": 5, "autores_peru": 1, "autores_otros": 0, "autorias_peru": 1, "primer_autor_peru": false, "instituciones_peru": "Pontificia Universidad Católica del Perú", "fecha_oferta": "2022-08-20", "plazas_oferta": ">=3", "dias_oferta_congreso": 116, "pais_congreso": "India", "ciudad_congreso": "Greater Noida"}, {"doi": "10.1109/ic3i56241.2022.10072999", "titulo": "Retracted: Blockchain-based Trust Management System in Implementation in Social Internet of Things", "anio": 2022, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "IC3I 2022", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": true, "fecha_retractacion": "2026-10-23", "doi_aviso_retractacion": "10.1109/IC3I56241.2022.11752412", "paises_coautores": "IN 4, PE 2", "autores_india": 4, "autores_peru": 2, "autores_otros": 0, "autorias_peru": 2, "primer_autor_peru": true, "instituciones_peru": "Private University of the North; Universidad Tecnológica del Perú", "fecha_oferta": "2022-08-01", "plazas_oferta": "6", "dias_oferta_congreso": 135, "pais_congreso": "India", "ciudad_congreso": "Greater Noida"}, {"doi": "10.1109/ic3i56241.2022.10073254", "titulo": "Retracted: Internet of Things and Machine Learning based Intelligent Irrigation System for Agriculture", "anio": 2022, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "IC3I 2022", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": true, "fecha_retractacion": "2026-10-23", "doi_aviso_retractacion": "10.1109/IC3I56241.2022.11752428", "paises_coautores": "IN 4, PE 2", "autores_india": 4, "autores_peru": 2, "autores_otros": 0, "autorias_peru": 2, "primer_autor_peru": true, "instituciones_peru": "Ministerio de Desarrollo Agrario y Riego; Universidad Tecnológica del Perú", "fecha_oferta": "2022-08-01", "plazas_oferta": "6", "dias_oferta_congreso": 135, "pais_congreso": "India", "ciudad_congreso": "Greater Noida"}, {"doi": "10.1109/ic3i56241.2022.10073319", "titulo": "Retracted: IoT Systems Internal Mapping with the Integration of Blockchain Technology", "anio": 2022, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "IC3I 2022", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": true, "fecha_retractacion": "2026-10-23", "doi_aviso_retractacion": "10.1109/IC3I56241.2022.11752434", "paises_coautores": "IN 4, PE 2", "autores_india": 4, "autores_peru": 2, "autores_otros": 0, "autorias_peru": 2, "primer_autor_peru": true, "instituciones_peru": "Federico Villarreal National University; Universidad Tecnológica del Perú", "fecha_oferta": "2022-08-20", "plazas_oferta": ">=3", "dias_oferta_congreso": 116, "pais_congreso": "India", "ciudad_congreso": "Greater Noida"}, {"doi": "10.1109/ic3i56241.2022.10073324", "titulo": "Retracted: Deep Learning-based Topic-level Examination of Social Media", "anio": 2022, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "IC3I 2022", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": true, "fecha_retractacion": "2026-10-23", "doi_aviso_retractacion": "10.1109/IC3I56241.2022.10073324", "paises_coautores": "IN 4, PE 2", "autores_india": 4, "autores_peru": 2, "autores_otros": 0, "autorias_peru": 2, "primer_autor_peru": false, "instituciones_peru": "Pontificia Universidad Católica del Perú; Universidad Tecnológica del Perú", "fecha_oferta": "2022-11-12", "plazas_oferta": "6", "dias_oferta_congreso": 32, "pais_congreso": "India", "ciudad_congreso": "Greater Noida"}, {"doi": "10.1109/ic3i56241.2022.10073395", "titulo": "Retracted: Management of a Microgrid using Deep Learning Techniques", "anio": 2022, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "IC3I 2022", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": true, "fecha_retractacion": "2026-10-23", "doi_aviso_retractacion": "10.1109/IC3I56241.2022.10073395", "paises_coautores": "IN 5, PE 1", "autores_india": 5, "autores_peru": 1, "autores_otros": 0, "autorias_peru": 1, "primer_autor_peru": true, "instituciones_peru": "Universidad Tecnológica del Perú", "fecha_oferta": "2022-08-27", "plazas_oferta": ">=3", "dias_oferta_congreso": 109, "pais_congreso": "India", "ciudad_congreso": "Greater Noida"}, {"doi": "10.1109/ic3i56241.2022.10073429", "titulo": "Retracted: A Frame Work of Security Attacks, Issues Classifications and Configuration Strategy for IoT Networks for the Successful Implementation", "anio": 2022, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "IC3I 2022", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": true, "fecha_retractacion": "2026-10-23", "doi_aviso_retractacion": "10.1109/IC3I56241.2022.11752444", "paises_coautores": "IN 5, PE 1", "autores_india": 5, "autores_peru": 1, "autores_otros": 0, "autorias_peru": 1, "primer_autor_peru": false, "instituciones_peru": "Pontificia Universidad Católica del Perú", "fecha_oferta": "2022-08-28", "plazas_oferta": ">=4", "dias_oferta_congreso": 108, "pais_congreso": "India", "ciudad_congreso": "Greater Noida"}, {"doi": "10.1109/icses55317.2022.9914050", "titulo": "Retracted: IOT based Electric Vehicles - Implementation", "anio": 2022, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "ICSES 2022", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": true, "fecha_retractacion": "2026-10-23", "doi_aviso_retractacion": "10.1109/ICSES55317.2022.11753214", "paises_coautores": "IN 5, PE 1", "autores_india": 5, "autores_peru": 1, "autores_otros": 0, "autorias_peru": 1, "primer_autor_peru": false, "instituciones_peru": "Universidad Tecnológica del Perú", "fecha_oferta": "2022-06-11", "plazas_oferta": ">=3", "dias_oferta_congreso": 34, "pais_congreso": "India", "ciudad_congreso": "Chennai"}, {"doi": "10.1109/icses55317.2022.9914062", "titulo": "A Smart Homes through Natural Language Processing using Internet of Things", "anio": 2022, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "ICSES 2022", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": false, "fecha_retractacion": null, "doi_aviso_retractacion": null, "paises_coautores": "IN 3, PE 2, UG 1", "autores_india": 3, "autores_peru": 2, "autores_otros": 1, "autorias_peru": 2, "primer_autor_peru": true, "instituciones_peru": "Universidad San Ignacio de Loyola; Universidad Tecnológica del Perú", "fecha_oferta": "2022-06-11", "plazas_oferta": ">=3", "dias_oferta_congreso": 34, "pais_congreso": "India", "ciudad_congreso": "Chennai"}, {"doi": "10.1109/icses55317.2022.9914139", "titulo": "Smart Loading System of Bi-Directional Wireless Network", "anio": 2022, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "ICSES 2022", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": false, "fecha_retractacion": null, "doi_aviso_retractacion": null, "paises_coautores": "IN 4, PE 2", "autores_india": 4, "autores_peru": 2, "autores_otros": 0, "autorias_peru": 2, "primer_autor_peru": true, "instituciones_peru": "Universidad San Ignacio de Loyola; Universidad Tecnológica del Perú", "fecha_oferta": "2022-06-11", "plazas_oferta": ">=3", "dias_oferta_congreso": 34, "pais_congreso": "India", "ciudad_congreso": "Chennai"}, {"doi": "10.1109/icses55317.2022.9914143", "titulo": "Implementation of Virual Instrumentation for Signal Acquisition and Processing", "anio": 2022, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "ICSES 2022", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": false, "fecha_retractacion": null, "doi_aviso_retractacion": null, "paises_coautores": "IN 3, ET 1, PE 1", "autores_india": 3, "autores_peru": 1, "autores_otros": 1, "autorias_peru": 1, "primer_autor_peru": false, "instituciones_peru": "Universidad Tecnológica del Perú", "fecha_oferta": "2022-06-11", "plazas_oferta": ">=4", "dias_oferta_congreso": 34, "pais_congreso": "India", "ciudad_congreso": "Chennai"}, {"doi": "10.1109/icses55317.2022.9914167", "titulo": "Retracted: Power System Monitoring, Control and protection using IoT and cyber security", "anio": 2022, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "ICSES 2022", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": true, "fecha_retractacion": "2026-10-23", "doi_aviso_retractacion": "10.1109/ICSES55317.2022.11753219", "paises_coautores": "IN 3, IQ 1, PE 1", "autores_india": 3, "autores_peru": 1, "autores_otros": 1, "autorias_peru": 1, "primer_autor_peru": false, "instituciones_peru": "Universidad Tecnológica del Perú", "fecha_oferta": "2022-06-11", "plazas_oferta": ">=3", "dias_oferta_congreso": 34, "pais_congreso": "India", "ciudad_congreso": "Chennai"}, {"doi": "10.1109/icses55317.2022.9914184", "titulo": "Retracted: Application of Neural Network in the Prediction Models of Machine Learning Based Design", "anio": 2022, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "ICSES 2022", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": true, "fecha_retractacion": "2026-10-23", "doi_aviso_retractacion": "10.1109/ICSES55317.2022.11753221", "paises_coautores": "IN 5, PE 1", "autores_india": 5, "autores_peru": 1, "autores_otros": 0, "autorias_peru": 1, "primer_autor_peru": false, "instituciones_peru": "Pontificia Universidad Católica del Perú", "fecha_oferta": "2022-06-11", "plazas_oferta": ">=6", "dias_oferta_congreso": 34, "pais_congreso": "India", "ciudad_congreso": "Chennai"}, {"doi": "10.1109/icses55317.2022.9914246", "titulo": "Retracted: Smart Online Oxygen Supply Management though Internet of Things (IoT)", "anio": 2022, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "ICSES 2022", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": true, "fecha_retractacion": "2026-10-23", "doi_aviso_retractacion": "10.1109/ICSES55317.2022.11753223", "paises_coautores": "IN 5, PE 1", "autores_india": 5, "autores_peru": 1, "autores_otros": 0, "autorias_peru": 1, "primer_autor_peru": false, "instituciones_peru": "Universidad Tecnológica del Perú", "fecha_oferta": "2022-06-11", "plazas_oferta": ">=4", "dias_oferta_congreso": 34, "pais_congreso": "India", "ciudad_congreso": "Chennai"}, {"doi": "10.1109/smart55829.2022.10046773", "titulo": "Integration of DL on Multi-Carrier Non-Orthogonal Multiple Access System with Simultaneous Wireless Information and Power Transfer", "anio": 2022, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "SMART 2022", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": false, "fecha_retractacion": null, "doi_aviso_retractacion": null, "paises_coautores": "IN 4, PE 1, US 1", "autores_india": 4, "autores_peru": 1, "autores_otros": 1, "autorias_peru": 1, "primer_autor_peru": false, "instituciones_peru": "Pontificia Universidad Católica del Perú", "fecha_oferta": "2022-09-07", "plazas_oferta": ">=5", "dias_oferta_congreso": 100, "pais_congreso": "India", "ciudad_congreso": "Moradabad"}, {"doi": "10.1109/smart55829.2022.10047358", "titulo": "Retracted: Block Chain Integration with AI for Agriculture Product Supply Chain", "anio": 2022, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "SMART 2022", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": true, "fecha_retractacion": "2026-10-23", "doi_aviso_retractacion": "10.1109/SMART55829.2022.11752320", "paises_coautores": "IN 3, PE 2, ID 1", "autores_india": 3, "autores_peru": 2, "autores_otros": 1, "autorias_peru": 2, "primer_autor_peru": false, "instituciones_peru": "Universidad Tecnológica del Perú; Universidad de San Martín de Porres", "fecha_oferta": "2022-08-27", "plazas_oferta": ">=3", "dias_oferta_congreso": 111, "pais_congreso": "India", "ciudad_congreso": "Moradabad"}, {"doi": "10.1109/smart55829.2022.10047390", "titulo": "Retracted: Evaluation of Performance of AI System during Voice Recognition in Social Conversation", "anio": 2022, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "SMART 2022", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": true, "fecha_retractacion": "2026-10-23", "doi_aviso_retractacion": "10.1109/SMART55829.2022.11752322", "paises_coautores": "IN 5, PE 1", "autores_india": 5, "autores_peru": 1, "autores_otros": 0, "autorias_peru": 1, "primer_autor_peru": true, "instituciones_peru": "Universidad Nacional del Altiplano", "fecha_oferta": "2022-08-20", "plazas_oferta": ">=2", "dias_oferta_congreso": 118, "pais_congreso": "India", "ciudad_congreso": "Moradabad"}, {"doi": "10.1109/smart55829.2022.10047779", "titulo": "Retracted: Blockchain Implementation in Financial Sector and Cyber Security System", "anio": 2022, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "SMART 2022", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": true, "fecha_retractacion": "2026-10-23", "doi_aviso_retractacion": "10.1109/SMART55829.2022.11752326", "paises_coautores": "IN 4, PE 2", "autores_india": 4, "autores_peru": 2, "autores_otros": 0, "autorias_peru": 2, "primer_autor_peru": true, "instituciones_peru": "Universidad César Vallejo; Universidad Tecnológica del Perú", "fecha_oferta": "2022-08-01", "plazas_oferta": "6", "dias_oferta_congreso": 137, "pais_congreso": "India", "ciudad_congreso": "Moradabad"}, {"doi": "10.1109/smart55829.2022.10047800", "titulo": "Retracted: Implementation and Execution of Block Chain Technology in the Field of Education", "anio": 2022, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "SMART 2022", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": true, "fecha_retractacion": "2026-10-23", "doi_aviso_retractacion": "10.1109/SMART55829.2022.11752327", "paises_coautores": "PE 5, IN 1", "autores_india": 1, "autores_peru": 5, "autores_otros": 0, "autorias_peru": 5, "primer_autor_peru": true, "instituciones_peru": "Universidad César Vallejo; Universidad Tecnológica del Perú", "fecha_oferta": "2022-10-25", "plazas_oferta": "6", "dias_oferta_congreso": 52, "pais_congreso": "India", "ciudad_congreso": "Moradabad"}, {"doi": "10.1109/aisc56616.2023.10084964", "titulo": "Retracted: A Research of Wireless Effective Communication with Low Power Consumption for Internet of Things (IoT) Applications", "anio": 2023, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "AISC 2023", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": true, "fecha_retractacion": "2026-10-23", "doi_aviso_retractacion": "10.1109/AISC56616.2023.11751905", "paises_coautores": "IN 5, PE 1", "autores_india": 5, "autores_peru": 1, "autores_otros": 0, "autorias_peru": 1, "primer_autor_peru": false, "instituciones_peru": "Universidad Tecnológica del Perú", "fecha_oferta": "2022-11-12", "plazas_oferta": "6", "dias_oferta_congreso": 76, "pais_congreso": "India", "ciudad_congreso": "Greater Noida"}, {"doi": "10.1109/aisc56616.2023.10084980", "titulo": "Enhanced Anomaly Detection System for IOT Based on Improved Dynamic SBPSO", "anio": 2023, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "AISC 2023", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": false, "fecha_retractacion": null, "doi_aviso_retractacion": null, "paises_coautores": "IN 5, PE 1", "autores_india": 5, "autores_peru": 1, "autores_otros": 0, "autorias_peru": 1, "primer_autor_peru": false, "instituciones_peru": "Universidad Tecnológica del Perú", "fecha_oferta": "2022-08-28", "plazas_oferta": ">=4", "dias_oferta_congreso": 152, "pais_congreso": "India", "ciudad_congreso": "Greater Noida"}, {"doi": "10.1109/aisc56616.2023.10085137", "titulo": "Blockchain effect on E-commerce: A framework for key research areas", "anio": 2023, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "AISC 2023", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": false, "fecha_retractacion": null, "doi_aviso_retractacion": null, "paises_coautores": "IN 5, PE 1", "autores_india": 5, "autores_peru": 1, "autores_otros": 0, "autorias_peru": 1, "primer_autor_peru": false, "instituciones_peru": "Universidad Tecnológica del Perú", "fecha_oferta": "2022-11-12", "plazas_oferta": "6", "dias_oferta_congreso": 76, "pais_congreso": "India", "ciudad_congreso": "Greater Noida"}, {"doi": "10.1109/aisc56616.2023.10085139", "titulo": "Retracted: An Experimental Study of Sink Hole Attacks and Distributed Denial of Service (DDS) on IoT network based Healthcare Applications", "anio": 2023, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "AISC 2023", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": true, "fecha_retractacion": "2026-10-23", "doi_aviso_retractacion": "10.1109/AISC56616.2023.11751910", "paises_coautores": "IN 5, PE 1", "autores_india": 5, "autores_peru": 1, "autores_otros": 0, "autorias_peru": 1, "primer_autor_peru": false, "instituciones_peru": "Pontificia Universidad Católica del Perú", "fecha_oferta": "2022-08-28", "plazas_oferta": ">=3", "dias_oferta_congreso": 152, "pais_congreso": "India", "ciudad_congreso": "Greater Noida"}, {"doi": "10.1109/aisc56616.2023.10085161", "titulo": "A Comprehensive review on Data Mining Techniques in managing the Medical Data cloud and its security constraints with the maintained of the communication networks", "anio": 2023, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "AISC 2023", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": false, "fecha_retractacion": null, "doi_aviso_retractacion": null, "paises_coautores": "IN 4, PE 1, US 1", "autores_india": 4, "autores_peru": 1, "autores_otros": 1, "autorias_peru": 1, "primer_autor_peru": false, "instituciones_peru": "Pontificia Universidad Católica del Perú", "fecha_oferta": "2022-09-07", "plazas_oferta": ">=6", "dias_oferta_congreso": 142, "pais_congreso": "India", "ciudad_congreso": "Greater Noida"}, {"doi": "10.1109/aisc56616.2023.10085175", "titulo": "Retracted: A Review of use of Artificial Intelligence on Cyber Security and the Fifth-Generation Cyber-attacks and its analysis", "anio": 2023, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "AISC 2023", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": true, "fecha_retractacion": "2026-10-23", "doi_aviso_retractacion": "10.1109/AISC56616.2023.11751911", "paises_coautores": "IN 5, PE 1", "autores_india": 5, "autores_peru": 1, "autores_otros": 0, "autorias_peru": 1, "primer_autor_peru": false, "instituciones_peru": "Universidad Tecnológica del Perú", "fecha_oferta": "2022-08-28", "plazas_oferta": ">=4", "dias_oferta_congreso": 152, "pais_congreso": "India", "ciudad_congreso": "Greater Noida"}, {"doi": "10.1109/aisc56616.2023.10085360", "titulo": "IoT Wireless Technology using lattice-based open source public-key NTRU cryptosystem", "anio": 2023, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "AISC 2023", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": false, "fecha_retractacion": null, "doi_aviso_retractacion": null, "paises_coautores": "IN 5, PE 1", "autores_india": 5, "autores_peru": 1, "autores_otros": 0, "autorias_peru": 1, "primer_autor_peru": false, "instituciones_peru": "Pontificia Universidad Católica del Perú", "fecha_oferta": "2022-10-30", "plazas_oferta": ">=2", "dias_oferta_congreso": 89, "pais_congreso": "India", "ciudad_congreso": "Greater Noida"}, {"doi": "10.1109/aisc56616.2023.10085452", "titulo": "Retracted: Blockchain Approach for Implementing Access Control In IOT", "anio": 2023, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "AISC 2023", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": true, "fecha_retractacion": "2026-10-23", "doi_aviso_retractacion": "10.1109/AISC56616.2023.11751918", "paises_coautores": "IN 4, PE 1, ZA 1", "autores_india": 4, "autores_peru": 1, "autores_otros": 1, "autorias_peru": 1, "primer_autor_peru": true, "instituciones_peru": "Universidad Tecnológica del Perú", "fecha_oferta": "2022-08-27", "plazas_oferta": ">=3", "dias_oferta_congreso": 153, "pais_congreso": "India", "ciudad_congreso": "Greater Noida"}, {"doi": "10.1109/icacite57410.2023.10182477", "titulo": "Retracted: Moving toward an intelligent edge: Machine Learning and Wireless Communication", "anio": 2023, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "ICACITE 2023", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": true, "fecha_retractacion": "2026-10-23", "doi_aviso_retractacion": "10.1109/ICACITE57410.2023.11752521", "paises_coautores": "IN 5, PE 1", "autores_india": 5, "autores_peru": 1, "autores_otros": 0, "autorias_peru": 1, "primer_autor_peru": false, "instituciones_peru": "Universidad Tecnológica del Perú", "fecha_oferta": "2022-11-12", "plazas_oferta": "6", "dias_oferta_congreso": 181, "pais_congreso": "India", "ciudad_congreso": "Greater Noida"}, {"doi": "10.1109/icacite57410.2023.10182605", "titulo": "Retracted: Computational Intelligence Router of Machine and Artificial Intelligence Learning for the Expansion of Agriculture's Manufacturing Sector", "anio": 2023, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "ICACITE 2023", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": true, "fecha_retractacion": "2026-10-23", "doi_aviso_retractacion": "10.1109/ICACITE57410.2023.11752526", "paises_coautores": "IN 5, PE 1", "autores_india": 5, "autores_peru": 1, "autores_otros": 0, "autorias_peru": 1, "primer_autor_peru": false, "instituciones_peru": "Universidad Tecnológica del Perú", "fecha_oferta": "2022-11-12", "plazas_oferta": "6", "dias_oferta_congreso": 181, "pais_congreso": "India", "ciudad_congreso": "Greater Noida"}, {"doi": "10.1109/icacite57410.2023.10182641", "titulo": "Retracted: Artificial Intelligence in Maintaining Interaction Between Humans and Computer", "anio": 2023, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "ICACITE 2023", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": true, "fecha_retractacion": "2026-10-23", "doi_aviso_retractacion": "10.1109/ICACITE57410.2023.11752528", "paises_coautores": "IN 5, PE 1", "autores_india": 5, "autores_peru": 1, "autores_otros": 0, "autorias_peru": 1, "primer_autor_peru": false, "instituciones_peru": "Universidad Tecnológica del Perú", "fecha_oferta": "2022-11-12", "plazas_oferta": "6", "dias_oferta_congreso": 181, "pais_congreso": "India", "ciudad_congreso": "Greater Noida"}, {"doi": "10.1109/icacite57410.2023.10182814", "titulo": "A Detailed Review and Study of Implementation of Security System Design for Machine Learning-Based Software Systems: Issues And Challenges", "anio": 2023, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "ICACITE 2023", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": false, "fecha_retractacion": null, "doi_aviso_retractacion": null, "paises_coautores": "IN 4, PE 1, ZA 1", "autores_india": 4, "autores_peru": 1, "autores_otros": 1, "autorias_peru": 1, "primer_autor_peru": false, "instituciones_peru": "Universidad Tecnológica del Perú", "fecha_oferta": "2022-08-28", "plazas_oferta": ">=4", "dias_oferta_congreso": 257, "pais_congreso": "India", "ciudad_congreso": "Greater Noida"}, {"doi": "10.1109/icacite57410.2023.10182975", "titulo": "Retracted: The Effective Role of Cyber Security in Supply Chain to Enhance Supply Chain Performance and Collaboration", "anio": 2023, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "ICACITE 2023", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": true, "fecha_retractacion": "2026-10-23", "doi_aviso_retractacion": "10.1109/ICACITE57410.2023.11752541", "paises_coautores": "IN 5, PE 1", "autores_india": 5, "autores_peru": 1, "autores_otros": 0, "autorias_peru": 1, "primer_autor_peru": false, "instituciones_peru": "Universidad Tecnológica del Perú", "fecha_oferta": "2022-11-12", "plazas_oferta": "6", "dias_oferta_congreso": 181, "pais_congreso": "India", "ciudad_congreso": "Greater Noida"}, {"doi": "10.1109/icacite57410.2023.10183129", "titulo": "Retracted: Analysis of future trend and opportunity in the emerging 5G IoT scenario", "anio": 2023, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "ICACITE 2023", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": true, "fecha_retractacion": "2026-10-23", "doi_aviso_retractacion": "10.1109/ICACITE57410.2023.11752550", "paises_coautores": "IN 5, PE 1", "autores_india": 5, "autores_peru": 1, "autores_otros": 0, "autorias_peru": 1, "primer_autor_peru": false, "instituciones_peru": "Universidad Tecnológica del Perú", "fecha_oferta": "2022-11-12", "plazas_oferta": "6", "dias_oferta_congreso": 181, "pais_congreso": "India", "ciudad_congreso": "Greater Noida"}, {"doi": "10.1109/smarttechcon57526.2023.10391767", "titulo": "Blockchain Based Abstract Syntax Tree to Detect Vulnerability in IOT-Enabled Smart Contract", "anio": 2023, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "SMARTTECHCON 2023", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": false, "fecha_retractacion": null, "doi_aviso_retractacion": null, "paises_coautores": "IN 3, PE 2, ID 1", "autores_india": 3, "autores_peru": 2, "autores_otros": 1, "autorias_peru": 2, "primer_autor_peru": false, "instituciones_peru": "Universidad San Ignacio de Loyola", "fecha_oferta": "2023-05-29", "plazas_oferta": "6", "dias_oferta_congreso": 81, "pais_congreso": "Singapore", "ciudad_congreso": "Singapore"}, {"doi": "10.1109/i-smac61858.2024.10714713", "titulo": "Improving Multimodal Interactions with ChatGPT by Integrating Machine Learning with Text, Image, and Speech Processing", "anio": 2024, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "I-SMAC 2024", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": false, "fecha_retractacion": null, "doi_aviso_retractacion": null, "paises_coautores": "IN 5, PE 1", "autores_india": 5, "autores_peru": 1, "autores_otros": 0, "autorias_peru": 1, "primer_autor_peru": false, "instituciones_peru": "National University of San Marcos", "fecha_oferta": "2024-07-21", "plazas_oferta": "6", "dias_oferta_congreso": 74, "pais_congreso": null, "ciudad_congreso": null}, {"doi": "10.1109/icdscnc62492.2024.10939783", "titulo": "Retracted: Deep Learning-Based Approaches for Enhanced Image Compression in Computer Vision Applications", "anio": 2024, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "ICDSCNC 2024", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": true, "fecha_retractacion": "2026-10-23", "doi_aviso_retractacion": "10.1109/ICDSCNC62492.2024.11752701", "paises_coautores": "IN 5, PE 1", "autores_india": 5, "autores_peru": 1, "autores_otros": 0, "autorias_peru": 1, "primer_autor_peru": false, "instituciones_peru": "National University of San Marcos", "fecha_oferta": "2024-07-30", "plazas_oferta": ">=5", "dias_oferta_congreso": 52, "pais_congreso": "India", "ciudad_congreso": "Bengaluru"}, {"doi": "10.1109/icspe62629.2024.10924323", "titulo": "Efficient Energy Management System of Hybrid Microgrid Powered by Renewable Energy Sources with 3DOF-PID Controllers Based 5Level H-Bridge Inverter", "anio": 2024, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "ICSPE 2024", "tipo_documento": "Conference paper", "n_autores": 8, "retractado": false, "fecha_retractacion": null, "doi_aviso_retractacion": null, "paises_coautores": "IN 6, BD 1, PE 1", "autores_india": 6, "autores_peru": 1, "autores_otros": 1, "autorias_peru": 1, "primer_autor_peru": false, "instituciones_peru": "Universidad Continental", "fecha_oferta": "2024-09-29", "plazas_oferta": "7", "dias_oferta_congreso": 60, "pais_congreso": "India", "ciudad_congreso": "Raigarh"}, {"doi": "10.1109/iconstem65670.2025.11374809", "titulo": "Deep Neural Networks for Pandemic Hindrance Detection and Screening Replication", "anio": 2025, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "ICONSTEM 2025", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": false, "fecha_retractacion": null, "doi_aviso_retractacion": null, "paises_coautores": "IN 4, PE 1, US 1", "autores_india": 4, "autores_peru": 1, "autores_otros": 1, "autorias_peru": 1, "primer_autor_peru": false, "instituciones_peru": "National University of Saint Anthony the Abbot in Cuzco", "fecha_oferta": "2023-07-10", "plazas_oferta": null, "dias_oferta_congreso": 850, "pais_congreso": "India", "ciudad_congreso": "Chennai"}, {"doi": "10.1016/j.matpr.2021.09.367", "titulo": "An Investigation on the Impact of Digital Revolution and Machine Learning in Supply Chain Management", "anio": 2021, "conjunto": "Otros", "editorial": "Elsevier", "congreso": "Materials Today: Proceedings", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": false, "fecha_retractacion": null, "doi_aviso_retractacion": null, "paises_coautores": "IN 2, KW 1, NO 1, PE 1, TH 1", "autores_india": 2, "autores_peru": 1, "autores_otros": 3, "autorias_peru": 1, "primer_autor_peru": false, "instituciones_peru": "Universidad Nacional de Moquegua", "fecha_oferta": null, "plazas_oferta": null, "dias_oferta_congreso": null, "pais_congreso": null, "ciudad_congreso": null}, {"doi": "10.1063/5.0218190", "titulo": "Origami based application in mechanical engineering", "anio": 2024, "conjunto": "Otros", "editorial": "AIP Publishing", "congreso": "ICAMT 2022", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": false, "fecha_retractacion": null, "doi_aviso_retractacion": null, "paises_coautores": "IN 4, PE 1, UK 1", "autores_india": 4, "autores_peru": 1, "autores_otros": 1, "autorias_peru": 1, "primer_autor_peru": false, "instituciones_peru": "Universidad Católica Santo Toribio de Mogrovejo", "fecha_oferta": null, "plazas_oferta": null, "dias_oferta_congreso": null, "pais_congreso": null, "ciudad_congreso": null}, {"doi": "10.1063/5.0218196", "titulo": "Machine learning based detection technique to predict the survival of the patients with chronic kidney diseases", "anio": 2024, "conjunto": "Otros", "editorial": "AIP Publishing", "congreso": "ICAMT 2022", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": false, "fecha_retractacion": null, "doi_aviso_retractacion": null, "paises_coautores": "IN 5, PE 1", "autores_india": 5, "autores_peru": 1, "autores_otros": 0, "autorias_peru": 1, "primer_autor_peru": false, "instituciones_peru": "Universidad Nacional Autónoma de Huanta", "fecha_oferta": null, "plazas_oferta": null, "dias_oferta_congreso": null, "pais_congreso": null, "ciudad_congreso": null}, {"doi": "10.1063/5.0218198", "titulo": "Design and implementation of a stress detection technique using bio signals and machine learning algorithms", "anio": 2024, "conjunto": "Otros", "editorial": "AIP Publishing", "congreso": "ICAMT 2022", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": false, "fecha_retractacion": null, "doi_aviso_retractacion": null, "paises_coautores": "IN 5, PE 1", "autores_india": 5, "autores_peru": 1, "autores_otros": 0, "autorias_peru": 1, "primer_autor_peru": false, "instituciones_peru": "Universidad Nacional del Altiplano", "fecha_oferta": null, "plazas_oferta": null, "dias_oferta_congreso": null, "pais_congreso": null, "ciudad_congreso": null}, {"doi": "10.1063/5.0218223", "titulo": "Air craft aerodynamics and ice accretion effects", "anio": 2024, "conjunto": "Otros", "editorial": "AIP Publishing", "congreso": "ICAMT 2022", "tipo_documento": "Conference paper", "n_autores": 7, "retractado": false, "fecha_retractacion": null, "doi_aviso_retractacion": null, "paises_coautores": "IN 4, ID 1, PE 1, UK 1", "autores_india": 4, "autores_peru": 1, "autores_otros": 2, "autorias_peru": 1, "primer_autor_peru": false, "instituciones_peru": "Universidad Católica Santo Toribio de Mogrovejo", "fecha_oferta": null, "plazas_oferta": null, "dias_oferta_congreso": null, "pais_congreso": null, "ciudad_congreso": null}, {"doi": "10.1063/5.0218355", "titulo": "An efficient biometric identification technology for Iris scanning", "anio": 2024, "conjunto": "Otros", "editorial": "AIP Publishing", "congreso": "ICAMT 2022", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": false, "fecha_retractacion": null, "doi_aviso_retractacion": null, "paises_coautores": "IN 5, PE 1", "autores_india": 5, "autores_peru": 1, "autores_otros": 0, "autorias_peru": 1, "primer_autor_peru": false, "instituciones_peru": "Universidad Nacional del Altiplano", "fecha_oferta": null, "plazas_oferta": null, "dias_oferta_congreso": null, "pais_congreso": null, "ciudad_congreso": null}, {"doi": "10.1201/9781003405580-43", "titulo": "Collective Intelligence in Digital Marketing and Business Decision-making Through Artificial Swarm Intelligence", "anio": 2024, "conjunto": "Otros", "editorial": "Taylor & Francis", "congreso": "Computer Science Engineering and Emerging Technologies", "tipo_documento": "Chapter", "n_autores": 6, "retractado": false, "fecha_retractacion": null, "doi_aviso_retractacion": null, "paises_coautores": "IN 4, PE 2", "autores_india": 4, "autores_peru": 2, "autores_otros": 0, "autorias_peru": 2, "primer_autor_peru": false, "instituciones_peru": "Pontificia Universidad Católica del Perú; Universidad Tecnológica del Perú", "fecha_oferta": null, "plazas_oferta": null, "dias_oferta_congreso": null, "pais_congreso": null, "ciudad_congreso": null}, {"doi": "10.1109/icacite57410.2023.10182854", "titulo": "Retracted: Artificial Intelligence’s Function In Chatbots That Use NLP And SVM Algorithms", "anio": 2023, "conjunto": "IEEE", "editorial": "IEEE", "congreso": "ICACITE 2023", "tipo_documento": "Conference paper", "n_autores": 6, "retractado": true, "fecha_retractacion": "2026-10-23", "doi_aviso_retractacion": "10.1109/ICACITE57410.2023.11752535", "paises_coautores": "IN 4, PE 1, ZA 1", "autores_india": 4, "autores_peru": 1, "autores_otros": 1, "autorias_peru": 1, "primer_autor_peru": true, "instituciones_peru": "Universidad Tecnológica del Perú", "fecha_oferta": "2022-08-27", "plazas_oferta": ">=3", "dias_oferta_congreso": 258, "pais_congreso": "India", "ciudad_congreso": "Greater Noida"}], "autorias": [{"doi": "10.1109/i-smac52330.2021.9640851", "conjunto": "IEEE", "anio": 2021, "congreso": "I-SMAC 2021", "retractado": true, "orden_autor": 3, "posicion": "middle", "institucion": "Universidad Continental", "origen": "OpenAlex", "persona": "P11"}, {"doi": "10.1109/iccike51210.2021.9410756", "conjunto": "IEEE", "anio": 2021, "congreso": "ICCIKE 2021", "retractado": true, "orden_autor": 3, "posicion": "middle", "institucion": "Universidad Nacional Santiago Antúnez de Mayolo", "origen": "OpenAlex", "persona": "P12"}, {"doi": "10.1109/iceca52323.2021.9675995", "conjunto": "IEEE", "anio": 2021, "congreso": "ICECA 2021", "retractado": true, "orden_autor": 3, "posicion": "middle", "institucion": "Catholic University of Santa María", "origen": "OpenAlex", "persona": "P13"}, {"doi": "10.1109/ic3i56241.2022.10072499", "conjunto": "IEEE", "anio": 2022, "congreso": "IC3I 2022", "retractado": true, "orden_autor": 3, "posicion": "middle", "institucion": "Universidad Tecnológica del Perú", "origen": "OpenAlex", "persona": "P01"}, {"doi": "10.1109/ic3i56241.2022.10072600", "conjunto": "IEEE", "anio": 2022, "congreso": "IC3I 2022", "retractado": true, "orden_autor": 1, "posicion": "first", "institucion": "Universidad Tecnológica del Perú", "origen": "OpenAlex", "persona": "P01"}, {"doi": "10.1109/ic3i56241.2022.10072600", "conjunto": "IEEE", "anio": 2022, "congreso": "IC3I 2022", "retractado": true, "orden_autor": 5, "posicion": "middle", "institucion": "Universidad San Ignacio de Loyola", "origen": "OpenAlex", "persona": "P04"}, {"doi": "10.1109/ic3i56241.2022.10072741", "conjunto": "IEEE", "anio": 2022, "congreso": "IC3I 2022", "retractado": true, "orden_autor": 1, "posicion": "first", "institucion": "Universidad Nacional del Altiplano", "origen": "OpenAlex", "persona": "P05"}, {"doi": "10.1109/ic3i56241.2022.10072925", "conjunto": "IEEE", "anio": 2022, "congreso": "IC3I 2022", "retractado": true, "orden_autor": 4, "posicion": "middle", "institucion": "Universidad Tecnológica del Perú", "origen": "OpenAlex", "persona": "P02"}, {"doi": "10.1109/ic3i56241.2022.10072980", "conjunto": "IEEE", "anio": 2022, "congreso": "IC3I 2022", "retractado": true, "orden_autor": 4, "posicion": "middle", "institucion": "Pontificia Universidad Católica del Perú", "origen": "OpenAlex", "persona": "P03"}, {"doi": "10.1109/ic3i56241.2022.10072999", "conjunto": "IEEE", "anio": 2022, "congreso": "IC3I 2022", "retractado": true, "orden_autor": 1, "posicion": "first", "institucion": "Universidad Tecnológica del Perú", "origen": "OpenAlex", "persona": "P02"}, {"doi": "10.1109/ic3i56241.2022.10072999", "conjunto": "IEEE", "anio": 2022, "congreso": "IC3I 2022", "retractado": true, "orden_autor": 4, "posicion": "middle", "institucion": "Private University of the North", "origen": "OpenAlex", "persona": "P14"}, {"doi": "10.1109/ic3i56241.2022.10073254", "conjunto": "IEEE", "anio": 2022, "congreso": "IC3I 2022", "retractado": true, "orden_autor": 1, "posicion": "first", "institucion": "Ministerio de Desarrollo Agrario y Riego", "origen": "OpenAlex", "persona": "P15"}, {"doi": "10.1109/ic3i56241.2022.10073254", "conjunto": "IEEE", "anio": 2022, "congreso": "IC3I 2022", "retractado": true, "orden_autor": 2, "posicion": "middle", "institucion": "Universidad Tecnológica del Perú", "origen": "OpenAlex", "persona": "P01"}, {"doi": "10.1109/ic3i56241.2022.10073319", "conjunto": "IEEE", "anio": 2022, "congreso": "IC3I 2022", "retractado": true, "orden_autor": 1, "posicion": "first", "institucion": "Universidad Tecnológica del Perú", "origen": "OpenAlex", "persona": "P02"}, {"doi": "10.1109/ic3i56241.2022.10073319", "conjunto": "IEEE", "anio": 2022, "congreso": "IC3I 2022", "retractado": true, "orden_autor": 4, "posicion": "middle", "institucion": "Federico Villarreal National University", "origen": "OpenAlex", "persona": "P16"}, {"doi": "10.1109/ic3i56241.2022.10073324", "conjunto": "IEEE", "anio": 2022, "congreso": "IC3I 2022", "retractado": true, "orden_autor": 2, "posicion": "middle", "institucion": "Universidad Tecnológica del Perú", "origen": "OpenAlex", "persona": "P06"}, {"doi": "10.1109/ic3i56241.2022.10073324", "conjunto": "IEEE", "anio": 2022, "congreso": "IC3I 2022", "retractado": true, "orden_autor": 6, "posicion": "last", "institucion": "Pontificia Universidad Católica del Perú", "origen": "OpenAlex", "persona": "P03"}, {"doi": "10.1109/ic3i56241.2022.10073395", "conjunto": "IEEE", "anio": 2022, "congreso": "IC3I 2022", "retractado": true, "orden_autor": 1, "posicion": "first", "institucion": "Universidad Tecnológica del Perú", "origen": "OpenAlex", "persona": "P02"}, {"doi": "10.1109/ic3i56241.2022.10073429", "conjunto": "IEEE", "anio": 2022, "congreso": "IC3I 2022", "retractado": true, "orden_autor": 6, "posicion": "last", "institucion": "Pontificia Universidad Católica del Perú", "origen": "OpenAlex", "persona": "P03"}, {"doi": "10.1109/icses55317.2022.9914050", "conjunto": "IEEE", "anio": 2022, "congreso": "ICSES 2022", "retractado": true, "orden_autor": 4, "posicion": "middle", "institucion": "Universidad Tecnológica del Perú", "origen": "OpenAlex", "persona": "P01"}, {"doi": "10.1109/icses55317.2022.9914062", "conjunto": "IEEE", "anio": 2022, "congreso": "ICSES 2022", "retractado": false, "orden_autor": 1, "posicion": "first", "institucion": "Universidad Tecnológica del Perú", "origen": "OpenAlex", "persona": "P01"}, {"doi": "10.1109/icses55317.2022.9914062", "conjunto": "IEEE", "anio": 2022, "congreso": "ICSES 2022", "retractado": false, "orden_autor": 4, "posicion": "middle", "institucion": "Universidad San Ignacio de Loyola", "origen": "OpenAlex", "persona": "P04"}, {"doi": "10.1109/icses55317.2022.9914139", "conjunto": "IEEE", "anio": 2022, "congreso": "ICSES 2022", "retractado": false, "orden_autor": 1, "posicion": "first", "institucion": "Universidad Tecnológica del Perú", "origen": "OpenAlex", "persona": "P01"}, {"doi": "10.1109/icses55317.2022.9914139", "conjunto": "IEEE", "anio": 2022, "congreso": "ICSES 2022", "retractado": false, "orden_autor": 4, "posicion": "middle", "institucion": "Universidad San Ignacio de Loyola", "origen": "OpenAlex", "persona": "P04"}, {"doi": "10.1109/icses55317.2022.9914143", "conjunto": "IEEE", "anio": 2022, "congreso": "ICSES 2022", "retractado": false, "orden_autor": 5, "posicion": "middle", "institucion": "Universidad Tecnológica del Perú", "origen": "OpenAlex", "persona": "P01"}, {"doi": "10.1109/icses55317.2022.9914167", "conjunto": "IEEE", "anio": 2022, "congreso": "ICSES 2022", "retractado": true, "orden_autor": 5, "posicion": "middle", "institucion": "Universidad Tecnológica del Perú", "origen": "OpenAlex", "persona": "P01"}, {"doi": "10.1109/icses55317.2022.9914184", "conjunto": "IEEE", "anio": 2022, "congreso": "ICSES 2022", "retractado": true, "orden_autor": 6, "posicion": "last", "institucion": "Pontificia Universidad Católica del Perú", "origen": "OpenAlex", "persona": "P03"}, {"doi": "10.1109/icses55317.2022.9914246", "conjunto": "IEEE", "anio": 2022, "congreso": "ICSES 2022", "retractado": true, "orden_autor": 5, "posicion": "middle", "institucion": "Universidad Tecnológica del Perú", "origen": "OpenAlex", "persona": "P01"}, {"doi": "10.1109/smart55829.2022.10046773", "conjunto": "IEEE", "anio": 2022, "congreso": "SMART 2022", "retractado": false, "orden_autor": 5, "posicion": "middle", "institucion": "Pontificia Universidad Católica del Perú", "origen": "OpenAlex", "persona": "P03"}, {"doi": "10.1109/smart55829.2022.10047358", "conjunto": "IEEE", "anio": 2022, "congreso": "SMART 2022", "retractado": true, "orden_autor": 2, "posicion": "middle", "institucion": "Universidad de San Martín de Porres", "origen": "OpenAlex", "persona": "P17"}, {"doi": "10.1109/smart55829.2022.10047358", "conjunto": "IEEE", "anio": 2022, "congreso": "SMART 2022", "retractado": true, "orden_autor": 5, "posicion": "middle", "institucion": "Universidad Tecnológica del Perú", "origen": "OpenAlex", "persona": "P02"}, {"doi": "10.1109/smart55829.2022.10047390", "conjunto": "IEEE", "anio": 2022, "congreso": "SMART 2022", "retractado": true, "orden_autor": 1, "posicion": "first", "institucion": "Universidad Nacional del Altiplano", "origen": "OpenAlex", "persona": "P05"}, {"doi": "10.1109/smart55829.2022.10047779", "conjunto": "IEEE", "anio": 2022, "congreso": "SMART 2022", "retractado": true, "orden_autor": 1, "posicion": "first", "institucion": "Universidad Tecnológica del Perú", "origen": "OpenAlex", "persona": "P02"}, {"doi": "10.1109/smart55829.2022.10047779", "conjunto": "IEEE", "anio": 2022, "congreso": "SMART 2022", "retractado": true, "orden_autor": 5, "posicion": "middle", "institucion": "Universidad César Vallejo", "origen": "OpenAlex", "persona": "P07"}, {"doi": "10.1109/smart55829.2022.10047800", "conjunto": "IEEE", "anio": 2022, "congreso": "SMART 2022", "retractado": true, "orden_autor": 1, "posicion": "first", "institucion": "Universidad Tecnológica del Perú", "origen": "OpenAlex", "persona": "P01"}, {"doi": "10.1109/smart55829.2022.10047800", "conjunto": "IEEE", "anio": 2022, "congreso": "SMART 2022", "retractado": true, "orden_autor": 2, "posicion": "middle", "institucion": "Universidad César Vallejo", "origen": "OpenAlex", "persona": "P18"}, {"doi": "10.1109/smart55829.2022.10047800", "conjunto": "IEEE", "anio": 2022, "congreso": "SMART 2022", "retractado": true, "orden_autor": 3, "posicion": "middle", "institucion": "Universidad César Vallejo", "origen": "OpenAlex", "persona": "P19"}, {"doi": "10.1109/smart55829.2022.10047800", "conjunto": "IEEE", "anio": 2022, "congreso": "SMART 2022", "retractado": true, "orden_autor": 4, "posicion": "middle", "institucion": "Universidad César Vallejo", "origen": "OpenAlex", "persona": "P07"}, {"doi": "10.1109/smart55829.2022.10047800", "conjunto": "IEEE", "anio": 2022, "congreso": "SMART 2022", "retractado": true, "orden_autor": 5, "posicion": "middle", "institucion": "Universidad Tecnológica del Perú", "origen": "OpenAlex", "persona": "P06"}, {"doi": "10.1109/aisc56616.2023.10084964", "conjunto": "IEEE", "anio": 2023, "congreso": "AISC 2023", "retractado": true, "orden_autor": 2, "posicion": "middle", "institucion": "Universidad Tecnológica del Perú", "origen": "OpenAlex", "persona": "P01"}, {"doi": "10.1109/aisc56616.2023.10084980", "conjunto": "IEEE", "anio": 2023, "congreso": "AISC 2023", "retractado": false, "orden_autor": 3, "posicion": "middle", "institucion": "Universidad Tecnológica del Perú", "origen": "OpenAlex", "persona": "P01"}, {"doi": "10.1109/aisc56616.2023.10085137", "conjunto": "IEEE", "anio": 2023, "congreso": "AISC 2023", "retractado": false, "orden_autor": 2, "posicion": "middle", "institucion": "Universidad Tecnológica del Perú", "origen": "OpenAlex", "persona": "P02"}, {"doi": "10.1109/aisc56616.2023.10085139", "conjunto": "IEEE", "anio": 2023, "congreso": "AISC 2023", "retractado": true, "orden_autor": 6, "posicion": "last", "institucion": "Pontificia Universidad Católica del Perú", "origen": "OpenAlex", "persona": "P03"}, {"doi": "10.1109/aisc56616.2023.10085161", "conjunto": "IEEE", "anio": 2023, "congreso": "AISC 2023", "retractado": false, "orden_autor": 6, "posicion": "last", "institucion": "Pontificia Universidad Católica del Perú", "origen": "OpenAlex", "persona": "P03"}, {"doi": "10.1109/aisc56616.2023.10085175", "conjunto": "IEEE", "anio": 2023, "congreso": "AISC 2023", "retractado": true, "orden_autor": 3, "posicion": "middle", "institucion": "Universidad Tecnológica del Perú", "origen": "OpenAlex", "persona": "P01"}, {"doi": "10.1109/aisc56616.2023.10085360", "conjunto": "IEEE", "anio": 2023, "congreso": "AISC 2023", "retractado": false, "orden_autor": 6, "posicion": "last", "institucion": "Pontificia Universidad Católica del Perú", "origen": "OpenAlex", "persona": "P03"}, {"doi": "10.1109/aisc56616.2023.10085452", "conjunto": "IEEE", "anio": 2023, "congreso": "AISC 2023", "retractado": true, "orden_autor": 1, "posicion": "first", "institucion": "Universidad Tecnológica del Perú", "origen": "OpenAlex", "persona": "P02"}, {"doi": "10.1109/icacite57410.2023.10182477", "conjunto": "IEEE", "anio": 2023, "congreso": "ICACITE 2023", "retractado": true, "orden_autor": 2, "posicion": "middle", "institucion": "Universidad Tecnológica del Perú", "origen": "OpenAlex", "persona": "P06"}, {"doi": "10.1109/icacite57410.2023.10182605", "conjunto": "IEEE", "anio": 2023, "congreso": "ICACITE 2023", "retractado": true, "orden_autor": 2, "posicion": "middle", "institucion": "Universidad Tecnológica del Perú", "origen": "OpenAlex", "persona": "P01"}, {"doi": "10.1109/icacite57410.2023.10182641", "conjunto": "IEEE", "anio": 2023, "congreso": "ICACITE 2023", "retractado": true, "orden_autor": 2, "posicion": "middle", "institucion": "Universidad Tecnológica del Perú", "origen": "OpenAlex", "persona": "P20"}, {"doi": "10.1109/icacite57410.2023.10182814", "conjunto": "IEEE", "anio": 2023, "congreso": "ICACITE 2023", "retractado": false, "orden_autor": 3, "posicion": "middle", "institucion": "Universidad Tecnológica del Perú", "origen": "OpenAlex", "persona": "P01"}, {"doi": "10.1109/icacite57410.2023.10182975", "conjunto": "IEEE", "anio": 2023, "congreso": "ICACITE 2023", "retractado": true, "orden_autor": 2, "posicion": "middle", "institucion": "Universidad Tecnológica del Perú", "origen": "OpenAlex", "persona": "P02"}, {"doi": "10.1109/icacite57410.2023.10183129", "conjunto": "IEEE", "anio": 2023, "congreso": "ICACITE 2023", "retractado": true, "orden_autor": 2, "posicion": "middle", "institucion": "Universidad Tecnológica del Perú", "origen": "OpenAlex", "persona": "P01"}, {"doi": "10.1109/smarttechcon57526.2023.10391767", "conjunto": "IEEE", "anio": 2023, "congreso": "SMARTTECHCON 2023", "retractado": false, "orden_autor": 3, "posicion": "middle", "institucion": "Universidad San Ignacio de Loyola", "origen": "OpenAlex", "persona": "P21"}, {"doi": "10.1109/smarttechcon57526.2023.10391767", "conjunto": "IEEE", "anio": 2023, "congreso": "SMARTTECHCON 2023", "retractado": false, "orden_autor": 5, "posicion": "middle", "institucion": "Universidad San Ignacio de Loyola", "origen": "OpenAlex", "persona": "P22"}, {"doi": "10.1109/i-smac61858.2024.10714713", "conjunto": "IEEE", "anio": 2024, "congreso": "I-SMAC 2024", "retractado": false, "orden_autor": 2, "posicion": "middle", "institucion": "National University of San Marcos", "origen": "OpenAlex", "persona": "P08"}, {"doi": "10.1109/icdscnc62492.2024.10939783", "conjunto": "IEEE", "anio": 2024, "congreso": "ICDSCNC 2024", "retractado": true, "orden_autor": 2, "posicion": "middle", "institucion": "National University of San Marcos", "origen": "OpenAlex", "persona": "P08"}, {"doi": "10.1109/icspe62629.2024.10924323", "conjunto": "IEEE", "anio": 2024, "congreso": "ICSPE 2024", "retractado": false, "orden_autor": 7, "posicion": "middle", "institucion": "Universidad Continental", "origen": "OpenAlex", "persona": "P23"}, {"doi": "10.1109/iconstem65670.2025.11374809", "conjunto": "IEEE", "anio": 2025, "congreso": "ICONSTEM 2025", "retractado": false, "orden_autor": 5, "posicion": "middle", "institucion": "National University of Saint Anthony the Abbot in Cuzco", "origen": "OpenAlex", "persona": "P24"}, {"doi": "10.1016/j.matpr.2021.09.367", "conjunto": "Otros", "anio": 2021, "congreso": "", "retractado": false, "orden_autor": 5, "posicion": "middle", "institucion": "Universidad Nacional de Moquegua", "origen": "OpenAlex", "persona": "P25"}, {"doi": "10.1063/5.0218190", "conjunto": "Otros", "anio": 2024, "congreso": "", "retractado": false, "orden_autor": 3, "posicion": "middle", "institucion": "Universidad Católica Santo Toribio de Mogrovejo", "origen": "OpenAlex", "persona": "P09"}, {"doi": "10.1063/5.0218196", "conjunto": "Otros", "anio": 2024, "congreso": "", "retractado": false, "orden_autor": 6, "posicion": "last", "institucion": "Universidad Nacional Autónoma de Huanta", "origen": "OpenAlex", "persona": "P05"}, {"doi": "10.1063/5.0218198", "conjunto": "Otros", "anio": 2024, "congreso": "", "retractado": false, "orden_autor": 6, "posicion": "last", "institucion": "Universidad Nacional del Altiplano", "origen": "OpenAlex", "persona": "P10"}, {"doi": "10.1063/5.0218223", "conjunto": "Otros", "anio": 2024, "congreso": "", "retractado": false, "orden_autor": 3, "posicion": "middle", "institucion": "Universidad Católica Santo Toribio de Mogrovejo", "origen": "OpenAlex", "persona": "P09"}, {"doi": "10.1063/5.0218355", "conjunto": "Otros", "anio": 2024, "congreso": "", "retractado": false, "orden_autor": 5, "posicion": "middle", "institucion": "Universidad Nacional del Altiplano", "origen": "OpenAlex", "persona": "P10"}, {"doi": "10.1201/9781003405580-43", "conjunto": "Otros", "anio": 2024, "congreso": "", "retractado": false, "orden_autor": 5, "posicion": "middle", "institucion": "Universidad Tecnológica del Perú", "origen": "OpenAlex", "persona": "P02"}, {"doi": "10.1201/9781003405580-43", "conjunto": "Otros", "anio": 2024, "congreso": "", "retractado": false, "orden_autor": 6, "posicion": "last", "institucion": "Pontificia Universidad Católica del Perú", "origen": "OpenAlex", "persona": "P03"}, {"doi": "10.1109/icacite57410.2023.10182854", "conjunto": "IEEE", "anio": 2023, "congreso": "ICACITE 2023", "retractado": true, "orden_autor": 1, "posicion": "first", "institucion": "Universidad Tecnológica del Perú", "origen": "Revisión manual", "persona": "P02"}], "paises_latam": [{"codigo": "PE", "pais": "Perú", "articulos": 46}, {"codigo": "EC", "pais": "Ecuador", "articulos": 5}, {"codigo": "BR", "pais": "Brasil", "articulos": 4}, {"codigo": "SV", "pais": "El Salvador", "articulos": 1}, {"codigo": "MX", "pais": "México", "articulos": 1}], "total_ieee": [{"conjunto": "IEEE", "articulos_total": 2046}]};
+  const calcs = {}, cache = {}, draws = [];
+  function data(id) {
+    if (RAW[id]) return { status: 'ok', data: RAW[id] };
+    const c = calcs[id];
+    if (!c) return { status: 'missing', data: [] };
+    if (!(id in cache)) cache[id] = c.fn(...c.inputs.map((i) => data(i).data));
+    return { status: 'ok', data: cache[id] };
+  }
+  function run(name) {
+    draws.filter((d) => !name || d[0] === name).forEach(([n, f]) => {
+      document.querySelectorAll('[data-draw="' + n + '"]').forEach((el) => {
+        try { f(el); } catch (e) { console.error('Error al dibujar ' + n, e); }
+      });
+    });
+  }
+  window.dash = {
+    colors: ['var(--c-peru)', 'var(--c-india)', 'var(--cds-chart-muted)'],
+    calc(id, o) { calcs[id] = o; },
+    loader() {},
+    onData(f) { f(); },
+    data,
+    draw(n, f) { if (f) draws.push([n, f]); else run(n); },
+    setLink() {}, params() { return {}; }, setParams() {}, resetParams() {}, refresh() {}
+  };
+  window.__dashRun = run;
+  let ancho = window.innerWidth, t;
+  window.addEventListener('resize', () => {
+    if (window.innerWidth === ancho) return;
+    ancho = window.innerWidth;
+    clearTimeout(t);
+    t = setTimeout(() => run(), 150);
+  });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => window.__dashRun && run());
+})();
+</script>
+<script>
+dash.calc('resumen', {
+  title: 'Cifras de Perú',
+  description: 'Publicaciones, autorías, personas, instituciones, retracciones y patrón de coautoría de las publicaciones con autoría peruana.',
+  inputs: ['articulos', 'autorias', 'total_ieee'],
+  fn: (articulos, autorias, total_ieee) => {
+    const ieee = articulos.filter((a) => a.conjunto === 'IEEE');
+    const retractadas = articulos.filter((a) => a.retractado === true).length;
+    const porPersona = new Map();
+    autorias.forEach((a) => porPersona.set(a.persona, (porPersona.get(a.persona) || 0) + 1));
+    const conteos = [...porPersona.values()].sort((x, y) => y - x);
+    const dias = articulos.map((a) => a.dias_oferta_congreso).filter((d) => typeof d === 'number').sort((x, y) => x - y);
+    const mediana = dias.length ? (dias.length % 2 ? dias[(dias.length - 1) / 2] : (dias[dias.length / 2 - 1] + dias[dias.length / 2]) / 2) : null;
+    const total = Number(total_ieee[0] && total_ieee[0].articulos_total) || 0;
+    return [{
+      publicaciones: articulos.length,
+      ieee: ieee.length,
+      otras: articulos.length - ieee.length,
+      autorias: autorias.length,
+      personas: porPersona.size,
+      instituciones: new Set(autorias.map((a) => a.institucion)).size,
+      retractadas,
+      pct_retractadas: articulos.length ? retractadas / articulos.length * 100 : 0,
+      retractadas_2310: articulos.filter((a) => a.fecha_retractacion === '2026-10-23').length,
+      primer_autor: articulos.filter((a) => a.primer_autor_peru === true).length,
+      seis_autores: articulos.filter((a) => Number(a.n_autores) === 6).length,
+      cinco_uno: articulos.filter((a) => a.autores_india === 5 && a.autores_peru === 1 && a.autores_otros === 0).length,
+      con_india: articulos.filter((a) => a.autores_india > 0).length,
+      top3_autorias: conteos.slice(0, 3).reduce((s, v) => s + v, 0),
+      una_sola: [...porPersona.keys()].filter((p) => new Set(autorias.filter((a) => a.persona === p).map((a) => a.doi)).size === 1).length,
+      mediana_dias: mediana === null ? null : Math.round(mediana),
+      con_oferta: dias.length,
+      pct_ieee: total ? ieee.length / total * 100 : 0
+    }];
+  }
+});
+
+dash.calc('por_pais', {
+  title: 'Afiliaciones de los autores por país',
+  description: 'Suma de afiliaciones de todos los autores de las publicaciones, por país, según la revisión manual.',
+  inputs: ['articulos'],
+  fn: (articulos) => {
+    const nombres = { IN: 'India', PE: 'Perú', US: 'Estados Unidos', AE: 'Emiratos Árabes Unidos', ZA: 'Sudáfrica', ID: 'Indonesia', UK: 'Reino Unido', GB: 'Reino Unido', UG: 'Uganda', ET: 'Etiopía', IQ: 'Irak', BD: 'Bangladés', TH: 'Tailandia', KW: 'Kuwait', NO: 'Noruega', SA: 'Arabia Saudita', MY: 'Malasia', EG: 'Egipto' };
+    const m = new Map();
+    articulos.forEach((a) => {
+      String(a.paises_coautores || '').split(',').forEach((parte) => {
+        const x = parte.trim().match(/^([A-Z]{2}) (\d+)$/);
+        if (!x) return;
+        const r = m.get(x[1]) || { codigo: x[1], pais: nombres[x[1]] || x[1], afiliaciones: 0, publicaciones: 0 };
+        r.afiliaciones += Number(x[2]);
+        r.publicaciones += 1;
+        m.set(x[1], r);
+      });
+    });
+    return [...m.values()].sort((a, b) => b.afiliaciones - a.afiliaciones || a.pais.localeCompare(b.pais));
+  }
+});
+
+dash.calc('por_tamano', {
+  title: 'Publicaciones por número de autores',
+  description: 'Cuántas publicaciones con autoría peruana tienen cada número de autores.',
+  inputs: ['articulos'],
+  fn: (articulos) => {
+    const m = new Map();
+    articulos.forEach((a) => { const n = Number(a.n_autores); m.set(n, (m.get(n) || 0) + 1); });
+    return [...m.entries()].map(([n_autores, publicaciones]) => ({ n_autores, etiqueta: n_autores + ' autores', publicaciones })).sort((a, b) => a.n_autores - b.n_autores);
+  }
+});
+
+dash.calc('por_institucion', {
+  title: 'Autorías por institución peruana',
+  description: 'Autorías y publicaciones por institución peruana, con las autorías en publicaciones retractadas.',
+  inputs: ['autorias', 'articulos'],
+  fn: (autorias, articulos) => {
+    const retr = new Set(articulos.filter((a) => a.retractado === true).map((a) => a.doi));
+    const m = new Map();
+    autorias.forEach((a) => {
+      const r = m.get(a.institucion) || { institucion: a.institucion, autorias: 0, en_retractadas: 0, dois: new Set() };
+      r.autorias += 1;
+      if (retr.has(a.doi)) r.en_retractadas += 1;
+      r.dois.add(a.doi);
+      m.set(a.institucion, r);
+    });
+    return [...m.values()].map((r) => ({ institucion: r.institucion, autorias: r.autorias, en_retractadas: r.en_retractadas, publicaciones: r.dois.size }))
+      .sort((a, b) => b.autorias - a.autorias || a.institucion.localeCompare(b.institucion));
+  }
+});
+
+dash.calc('por_persona', {
+  title: 'Autorías por persona',
+  description: 'Autorías y publicaciones de cada persona con afiliación peruana, identificada por un código.',
+  inputs: ['autorias', 'articulos'],
+  fn: (autorias, articulos) => {
+    const retr = new Set(articulos.filter((a) => a.retractado === true).map((a) => a.doi));
+    const m = new Map();
+    autorias.forEach((a) => {
+      const r = m.get(a.persona) || { persona: a.persona, autorias: 0, en_retractadas: 0, instituciones: new Set() };
+      r.autorias += 1;
+      if (retr.has(a.doi)) r.en_retractadas += 1;
+      r.instituciones.add(a.institucion);
+      m.set(a.persona, r);
+    });
+    return [...m.values()].map((r) => ({ persona: r.persona, autorias: r.autorias, en_retractadas: r.en_retractadas, instituciones: [...r.instituciones].sort().join('; ') }))
+      .sort((a, b) => b.autorias - a.autorias || a.persona.localeCompare(b.persona));
+  }
+});
+
+dash.calc('por_anio', {
+  title: 'Publicaciones por año',
+  description: 'Publicaciones con autoría peruana por año, separadas por estado de retracción.',
+  inputs: ['articulos'],
+  fn: (articulos) => {
+    const m = new Map();
+    articulos.forEach((a) => {
+      const r = m.get(a.anio) || { anio: a.anio, retractados: 0, sin_retractar: 0, total: 0 };
+      if (a.retractado === true) r.retractados += 1; else r.sin_retractar += 1;
+      r.total += 1;
+      m.set(a.anio, r);
+    });
+    return [...m.values()].sort((a, b) => a.anio - b.anio);
+  }
+});
+
+dash.calc('por_editorial', {
+  title: 'Publicaciones por editorial',
+  description: 'Publicaciones con autoría peruana por editorial, con las retractadas.',
+  inputs: ['articulos'],
+  fn: (articulos) => {
+    const m = new Map();
+    articulos.forEach((a) => {
+      const k = a.editorial || 'Sin dato';
+      const r = m.get(k) || { editorial: k, publicaciones: 0, retractadas: 0 };
+      r.publicaciones += 1;
+      if (a.retractado === true) r.retractadas += 1;
+      m.set(k, r);
+    });
+    return [...m.values()].sort((a, b) => b.publicaciones - a.publicaciones || a.editorial.localeCompare(b.editorial));
+  }
+});
+
+dash.calc('por_lugar', {
+  title: 'Publicaciones por país del congreso',
+  description: 'País donde se celebró el congreso de cada publicación con autoría peruana.',
+  inputs: ['articulos'],
+  fn: (articulos) => {
+    const nombres = { India: 'India', Singapore: 'Singapur' };
+    const m = new Map();
+    articulos.forEach((a) => {
+      const k = a.pais_congreso ? (nombres[a.pais_congreso] || a.pais_congreso) : 'Sin dato';
+      m.set(k, (m.get(k) || 0) + 1);
+    });
+    return [...m.entries()].map(([lugar, publicaciones]) => ({ lugar, publicaciones }))
+      .sort((a, b) => (a.lugar === 'Sin dato') - (b.lugar === 'Sin dato') || b.publicaciones - a.publicaciones);
+  }
+});
+
+dash.calc('por_congreso', {
+  title: 'Publicaciones por congreso o libro',
+  description: 'Publicaciones con autoría peruana por congreso o libro, con las retractadas.',
+  inputs: ['articulos'],
+  fn: (articulos) => {
+    const m = new Map();
+    articulos.forEach((a) => {
+      const k = a.congreso || 'Sin dato';
+      const r = m.get(k) || { congreso: k, publicaciones: 0, retractadas: 0 };
+      r.publicaciones += 1;
+      if (a.retractado === true) r.retractadas += 1;
+      m.set(k, r);
+    });
+    return [...m.values()].sort((a, b) => b.publicaciones - a.publicaciones || a.congreso.localeCompare(b.congreso));
+  }
+});
+
+dash.calc('latam_rank', {
+  title: 'Posición de Perú en Latinoamérica',
+  description: 'Puesto de Perú entre los países latinoamericanos con artículos IEEE identificados, y el país que le sigue.',
+  inputs: ['paises_latam'],
+  fn: (paises) => {
+    const orden = [...paises].sort((a, b) => b.articulos - a.articulos);
+    const pe = orden.find((p) => p.codigo === 'PE');
+    const siguiente = orden.find((p) => p.codigo !== 'PE');
+    return [{ puesto: orden.findIndex((p) => p.codigo === 'PE') + 1, articulos_peru: pe ? pe.articulos : null, siguiente: siguiente ? siguiente.pais : null, articulos_siguiente: siguiente ? siguiente.articulos : null }];
+  }
+});
+</script>
+<script>
+window.pe = (() => {
+  const loc = d3.formatLocale({ decimal: ',', thousands: '.', grouping: [3], currency: ['S/ ', ''] });
+  const fInt = loc.format(',d');
+  const fDec = loc.format(',.1f');
+  const fmt = { int: (v) => fInt(v), pct: (v) => fDec(v) + ' %' };
+
+  function tip(el) {
+    const t = document.createElement('div');
+    t.className = 'pe-tip';
+    t.hidden = true;
+    el.appendChild(t);
+    return {
+      show(ev, lines) {
+        t.replaceChildren(...lines.map((s, i) => {
+          const d = document.createElement('div');
+          d.textContent = s;
+          if (i === 0) d.className = 'pe-tip-h';
+          return d;
+        }));
+        t.hidden = false;
+        const r = el.getBoundingClientRect();
+        const w = t.offsetWidth;
+        let x = ev.clientX - r.left + 12;
+        if (x + w > r.width) x = Math.max(0, ev.clientX - r.left - w - 12);
+        t.style.left = x + 'px';
+        t.style.top = (ev.clientY - r.top + 14) + 'px';
+      },
+      hide() { t.hidden = true; }
+    };
+  }
+
+  function placeholder(el, status) {
+    const p = document.createElement('p');
+    p.className = 'pe-empty';
+    p.textContent = status === 'error' ? 'No se pudo cargar' : '—';
+    el.replaceChildren(p);
+  }
+
+  function state(el, status) { el.classList.toggle('dash-skeleton', status === 'loading'); }
+
+  // Barras horizontales con la etiqueta encima de cada barra; `part` pinta en rojo una parte de la barra.
+  function hbars(el, rows, o) {
+    const W = Math.max(200, el.clientWidth || 300);
+    const rowH = 40;
+    const H = rows.length * rowH;
+    el.replaceChildren();
+    const svg = d3.select(el).append('svg')
+      .attr('width', '100%').attr('height', H).attr('viewBox', `0 0 ${W} ${H}`)
+      .attr('role', 'img').attr('aria-label', o.aria);
+    const max = d3.max(rows, o.value) || 1;
+    const x = d3.scaleLinear([0, max], [0, Math.max(40, W - 40)]);
+    const g = svg.selectAll('g').data(rows).join('g').attr('transform', (d, i) => `translate(0,${i * rowH})`);
+    g.append('text').attr('class', 'pe-bl').attr('x', 0).attr('y', 13).text(o.label);
+    g.append('rect').attr('x', 0).attr('y', 20).attr('height', 12).attr('rx', 2)
+      .attr('width', (d) => Math.max(2, x(o.value(d)))).style('fill', o.color);
+    if (o.part) {
+      g.append('rect').attr('x', 0).attr('y', 20).attr('height', 12).attr('rx', 2)
+        .attr('width', (d) => o.part(d) ? Math.max(2, x(o.part(d))) : 0)
+        .style('fill', 'var(--cds-chart-status-critical)');
+    }
+    g.append('text').attr('class', 'pe-bv').attr('x', (d) => Math.max(2, x(o.value(d))) + 6).attr('y', 31).text((d) => fmt.int(o.value(d)));
+    g.select('.pe-bl').each(function () {
+      let s = this.textContent;
+      while (this.getComputedTextLength() > W && s.length > 6) {
+        s = s.slice(0, -2);
+        this.textContent = s.trimEnd() + '…';
+      }
+    });
+    const tp = tip(el);
+    g.append('rect').attr('width', W).attr('height', rowH).style('fill', 'transparent')
+      .on('pointermove pointerdown', (ev, d) => tp.show(ev, o.tip(d)))
+      .on('pointerleave', () => tp.hide());
+  }
+
+  function bars(id, el, rows, o) {
+    const s = dash.data(id);
+    state(el, s.status);
+    if (s.status !== 'ok' || !s.data || !s.data.length) { placeholder(el, s.status); return; }
+    hbars(el, rows ? rows(s.data) : s.data, o);
+  }
+
+  return { fmt, tip, placeholder, state, hbars, bars };
+})();
+</script>
+<script>
+dash.draw('num', (el) => {
+  const s = dash.data(el.dataset.source);
+  pe.state(el, s.status);
+  if (s.status !== 'ok' || !s.data) { el.textContent = '—'; return; }
+  const row = s.data[Number(el.dataset.row || 0)];
+  const v = row ? row[el.dataset.field] : null;
+  if (v === null || v === undefined) { el.textContent = '—'; return; }
+  if (el.dataset.fmt === 'pct') el.textContent = pe.fmt.pct(Number(v));
+  else el.textContent = typeof v === 'number' ? pe.fmt.int(v) : String(v);
+});
+
+dash.draw('paises', (el) => pe.bars('por_pais', el, (rows) => {
+  if (rows.length <= 7) return rows;
+  const resto = rows.slice(6);
+  return rows.slice(0, 6).concat([{ codigo: 'OT', pais: `Otros ${resto.length} países`, afiliaciones: resto.reduce((s, r) => s + r.afiliaciones, 0), publicaciones: resto.reduce((s, r) => s + r.publicaciones, 0) }]);
+}, {
+  aria: 'Afiliaciones de los autores de las publicaciones con autoría peruana, por país',
+  label: (r) => r.pais,
+  value: (r) => r.afiliaciones,
+  color: (r) => r.codigo === 'PE' ? dash.colors[0] : (r.codigo === 'IN' ? dash.colors[1] : 'var(--cds-chart-muted)'),
+  tip: (r) => r.codigo === 'OT' ? [r.pais, `${pe.fmt.int(r.afiliaciones)} afiliaciones en total`] : [r.pais, `${pe.fmt.int(r.afiliaciones)} afiliaciones`, `en ${pe.fmt.int(r.publicaciones)} publicaciones`]
+}));
+
+dash.draw('equipo', (el) => pe.bars('por_tamano', el, null, {
+  aria: 'Publicaciones con autoría peruana por número de autores',
+  label: (r) => r.etiqueta,
+  value: (r) => r.publicaciones,
+  color: (r) => r.n_autores === 6 ? 'var(--cds-chart-status-critical)' : 'var(--cds-chart-muted)',
+  tip: (r) => [r.etiqueta, `${pe.fmt.int(r.publicaciones)} publicaciones`]
+}));
+
+dash.draw('instituciones', (el) => pe.bars('por_institucion', el, null, {
+  aria: 'Autorías por institución peruana, con las de publicaciones retractadas',
+  label: (r) => r.institucion,
+  value: (r) => r.autorias,
+  part: (r) => r.en_retractadas,
+  color: () => 'var(--cds-chart-muted)',
+  tip: (r) => [r.institucion, `${pe.fmt.int(r.autorias)} autorías en ${pe.fmt.int(r.publicaciones)} publicaciones`, `${pe.fmt.int(r.en_retractadas)} en publicaciones retractadas`]
+}));
+
+dash.draw('personas', (el) => pe.bars('por_persona', el, (rows) => rows.slice(0, 10), {
+  aria: 'Las diez personas con más autorías, identificadas por código',
+  label: (r) => `${r.persona} · ${r.instituciones}`,
+  value: (r) => r.autorias,
+  part: (r) => r.en_retractadas,
+  color: () => 'var(--cds-chart-muted)',
+  tip: (r) => [r.persona, r.instituciones, `${pe.fmt.int(r.autorias)} autorías`, `${pe.fmt.int(r.en_retractadas)} en publicaciones retractadas`]
+}));
+
+dash.draw('editorial', (el) => pe.bars('por_editorial', el, null, {
+  aria: 'Publicaciones con autoría peruana por editorial',
+  label: (r) => r.editorial,
+  value: (r) => r.publicaciones,
+  part: (r) => r.retractadas,
+  color: () => 'var(--cds-chart-muted)',
+  tip: (r) => [r.editorial, `${pe.fmt.int(r.publicaciones)} publicaciones`, `${pe.fmt.int(r.retractadas)} retractadas`]
+}));
+
+dash.draw('lugar', (el) => pe.bars('por_lugar', el, null, {
+  aria: 'Publicaciones con autoría peruana por país donde se celebró el congreso',
+  label: (r) => r.lugar,
+  value: (r) => r.publicaciones,
+  color: (r) => r.lugar === 'Sin dato' ? 'var(--cds-chart-muted)' : dash.colors[1],
+  tip: (r) => [r.lugar, `${pe.fmt.int(r.publicaciones)} publicaciones`]
+}));
+
+dash.draw('congresos', (el) => pe.bars('por_congreso', el, (rows) => rows.slice(0, 10), {
+  aria: 'Los diez congresos o libros con más publicaciones de autoría peruana, con las retractadas',
+  label: (r) => r.congreso,
+  value: (r) => r.publicaciones,
+  part: (r) => r.retractadas,
+  color: () => 'var(--cds-chart-muted)',
+  tip: (r) => [r.congreso, `${pe.fmt.int(r.publicaciones)} publicaciones`, `${pe.fmt.int(r.retractadas)} retractadas`]
+}));
+
+dash.draw('latam', (el) => pe.bars('paises_latam', el, (rows) => [...rows].sort((a, b) => b.articulos - a.articulos), {
+  aria: 'Artículos IEEE identificados por país latinoamericano',
+  label: (r) => r.pais,
+  value: (r) => r.articulos,
+  color: (r) => r.codigo === 'PE' ? dash.colors[0] : 'var(--cds-chart-muted)',
+  tip: (r) => [r.pais, `${pe.fmt.int(r.articulos)} artículos IEEE identificados`]
+}));
+
+dash.draw('anio', (el) => {
+  const s = dash.data('por_anio');
+  pe.state(el, s.status);
+  if (s.status !== 'ok' || !s.data || !s.data.length) return pe.placeholder(el, s.status);
+  const rows = s.data;
+  const W = Math.max(220, el.clientWidth || 300);
+  const H = 240;
+  el.replaceChildren();
+  const svg = d3.select(el).append('svg').attr('width', '100%').attr('height', H).attr('viewBox', `0 0 ${W} ${H}`)
+    .attr('role', 'img').attr('aria-label', 'Publicaciones con autoría peruana por año, retractadas y sin retractar');
+  const y = d3.scaleLinear([0, d3.max(rows, (r) => r.total)], [H - 26, 20]).nice();
+  const ticks = y.ticks(4).filter((t) => Number.isInteger(t));
+  const gy = svg.append('g');
+  const labels = gy.selectAll('text').data(ticks).join('text').attr('y', (t) => y(t) + 4).attr('text-anchor', 'end').text((t) => pe.fmt.int(t));
+  let lw = 0;
+  labels.each(function () { lw = Math.max(lw, this.getComputedTextLength()); });
+  const ml = Math.ceil(lw) + 10;
+  labels.attr('x', ml - 6);
+  gy.selectAll('line').data(ticks).join('line').attr('x1', ml).attr('x2', W).attr('y1', (t) => y(t)).attr('y2', (t) => y(t))
+    .style('stroke', (t) => t === 0 ? 'var(--cds-chart-axis)' : 'var(--cds-chart-grid)');
+  const x = d3.scaleBand(rows.map((r) => String(r.anio)), [ml, W]).padding(0.3);
+  const g = svg.selectAll('g.bar').data(rows).join('g').attr('class', 'bar');
+  g.append('rect').attr('x', (r) => x(String(r.anio))).attr('width', x.bandwidth())
+    .attr('y', (r) => y(r.retractados)).attr('height', (r) => y(0) - y(r.retractados))
+    .style('fill', 'var(--cds-chart-status-critical)');
+  g.append('rect').attr('x', (r) => x(String(r.anio))).attr('width', x.bandwidth())
+    .attr('y', (r) => y(r.total)).attr('height', (r) => y(r.retractados) - y(r.total))
+    .style('fill', 'var(--cds-chart-muted)');
+  g.append('text').attr('class', 'pe-tot').attr('text-anchor', 'middle')
+    .attr('x', (r) => x(String(r.anio)) + x.bandwidth() / 2).attr('y', (r) => y(r.total) - 6).text((r) => pe.fmt.int(r.total));
+  svg.append('g').selectAll('text').data(rows).join('text').attr('text-anchor', 'middle')
+    .attr('x', (r) => x(String(r.anio)) + x.bandwidth() / 2).attr('y', H - 8).text((r) => String(r.anio));
+  const tp = pe.tip(el);
+  g.append('rect').attr('x', (r) => x(String(r.anio)) - x.step() * x.paddingInner() / 2).attr('width', x.step())
+    .attr('y', 0).attr('height', H).style('fill', 'transparent')
+    .on('pointermove pointerdown', (ev, r) => tp.show(ev, [String(r.anio), `${pe.fmt.int(r.total)} publicaciones`, `${pe.fmt.int(r.retractados)} retractadas`, `${pe.fmt.int(r.sin_retractar)} sin retractar`]))
+    .on('pointerleave', () => tp.hide());
+});
+
+window.peFiltro = { editor: '', estado: '' };
+document.querySelectorAll('[data-pe-filter]').forEach((sel) => {
+  sel.addEventListener('change', () => {
+    window.peFiltro[sel.dataset.peFilter] = sel.value;
+    dash.draw('tabla');
+  });
+});
+
+dash.draw('tabla', (tb) => {
+  const s = dash.data('articulos');
+  if (s.status !== 'ok') { tb.replaceChildren(); return; }
+  const f = window.peFiltro || {};
+  const rows = s.data
+    .filter((r) => (!f.editor || r.conjunto === f.editor) && (!f.estado || String(r.retractado) === f.estado))
+    .sort((a, b) => b.anio - a.anio || String(a.congreso).localeCompare(String(b.congreso)));
+  const td = (txt, cls) => { const c = document.createElement('td'); if (cls) c.className = cls; c.textContent = txt; return c; };
+  tb.replaceChildren(...rows.map((r) => {
+    const tr = document.createElement('tr');
+    tr.dataset.key = r.doi;
+    const tt = document.createElement('td');
+    tt.className = 'pe-tit';
+    const a = document.createElement('a');
+    a.href = 'https://doi.org/' + r.doi;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.textContent = r.titulo;
+    tt.appendChild(a);
+    const st = document.createElement('td');
+    const pill = document.createElement('span');
+    pill.className = r.retractado === true ? 'pe-pill pe-pill-bad' : 'pe-pill';
+    pill.textContent = r.retractado === true ? 'Retractada' : 'Sin retractar';
+    st.appendChild(pill);
+    const fecha = r.fecha_retractacion ? d3.utcFormat('%d/%m/%Y')(new Date(r.fecha_retractacion + 'T00:00:00Z')) : '—';
+    tr.append(td(String(r.anio), 'num'), td(r.editorial || '—'), td(r.congreso || '—', 'pe-cong'), tt, td(r.instituciones_peru, 'pe-inst'), td(r.paises_coautores || '—'), st, td(fecha, 'num'));
+    return tr;
+  }));
+});
+</script>
+<script>window.__dashRun();</script>
+</body>
+</html>

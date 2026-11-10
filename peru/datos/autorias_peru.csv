@@ -1,0 +1,69 @@
+﻿doi,conjunto,anio,congreso,retractado,orden_autor,posicion,institucion,origen,persona
+10.1109/i-smac52330.2021.9640851,IEEE,2021,I-SMAC 2021,True,3,middle,Universidad Continental,OpenAlex,P11
+10.1109/iccike51210.2021.9410756,IEEE,2021,ICCIKE 2021,True,3,middle,Universidad Nacional Santiago Antúnez de Mayolo,OpenAlex,P12
+10.1109/iceca52323.2021.9675995,IEEE,2021,ICECA 2021,True,3,middle,Catholic University of Santa María,OpenAlex,P13
+10.1109/ic3i56241.2022.10072499,IEEE,2022,IC3I 2022,True,3,middle,Universidad Tecnológica del Perú,OpenAlex,P01
+10.1109/ic3i56241.2022.10072600,IEEE,2022,IC3I 2022,True,1,first,Universidad Tecnológica del Perú,OpenAlex,P01
+10.1109/ic3i56241.2022.10072600,IEEE,2022,IC3I 2022,True,5,middle,Universidad San Ignacio de Loyola,OpenAlex,P04
+10.1109/ic3i56241.2022.10072741,IEEE,2022,IC3I 2022,True,1,first,Universidad Nacional del Altiplano,OpenAlex,P05
+10.1109/ic3i56241.2022.10072925,IEEE,2022,IC3I 2022,True,4,middle,Universidad Tecnológica del Perú,OpenAlex,P02
+10.1109/ic3i56241.2022.10072980,IEEE,2022,IC3I 2022,True,4,middle,Pontificia Universidad Católica del Perú,OpenAlex,P03
+10.1109/ic3i56241.2022.10072999,IEEE,2022,IC3I 2022,True,1,first,Universidad Tecnológica del Perú,OpenAlex,P02
+10.1109/ic3i56241.2022.10072999,IEEE,2022,IC3I 2022,True,4,middle,Private University of the North,OpenAlex,P14
+10.1109/ic3i56241.2022.10073254,IEEE,2022,IC3I 2022,True,1,first,Ministerio de Desarrollo Agrario y Riego,OpenAlex,P15
+10.1109/ic3i56241.2022.10073254,IEEE,2022,IC3I 2022,True,2,middle,Universidad Tecnológica del Perú,OpenAlex,P01
+10.1109/ic3i56241.2022.10073319,IEEE,2022,IC3I 2022,True,1,first,Universidad Tecnológica del Perú,OpenAlex,P02
+10.1109/ic3i56241.2022.10073319,IEEE,2022,IC3I 2022,True,4,middle,Federico Villarreal National University,OpenAlex,P16
+10.1109/ic3i56241.2022.10073324,IEEE,2022,IC3I 2022,True,2,middle,Universidad Tecnológica del Perú,OpenAlex,P06
+10.1109/ic3i56241.2022.10073324,IEEE,2022,IC3I 2022,True,6,last,Pontificia Universidad Católica del Perú,OpenAlex,P03
+10.1109/ic3i56241.2022.10073395,IEEE,2022,IC3I 2022,True,1,first,Universidad Tecnológica del Perú,OpenAlex,P02
+10.1109/ic3i56241.2022.10073429,IEEE,2022,IC3I 2022,True,6,last,Pontificia Universidad Católica del Perú,OpenAlex,P03
+10.1109/icses55317.2022.9914050,IEEE,2022,ICSES 2022,True,4,middle,Universidad Tecnológica del Perú,OpenAlex,P01
+10.1109/icses55317.2022.9914062,IEEE,2022,ICSES 2022,False,1,first,Universidad Tecnológica del Perú,OpenAlex,P01
+10.1109/icses55317.2022.9914062,IEEE,2022,ICSES 2022,False,4,middle,Universidad San Ignacio de Loyola,OpenAlex,P04
+10.1109/icses55317.2022.9914139,IEEE,2022,ICSES 2022,False,1,first,Universidad Tecnológica del Perú,OpenAlex,P01
+10.1109/icses55317.2022.9914139,IEEE,2022,ICSES 2022,False,4,middle,Universidad San Ignacio de Loyola,OpenAlex,P04
+10.1109/icses55317.2022.9914143,IEEE,2022,ICSES 2022,False,5,middle,Universidad Tecnológica del Perú,OpenAlex,P01
+10.1109/icses55317.2022.9914167,IEEE,2022,ICSES 2022,True,5,middle,Universidad Tecnológica del Perú,OpenAlex,P01
+10.1109/icses55317.2022.9914184,IEEE,2022,ICSES 2022,True,6,last,Pontificia Universidad Católica del Perú,OpenAlex,P03
+10.1109/icses55317.2022.9914246,IEEE,2022,ICSES 2022,True,5,middle,Universidad Tecnológica del Perú,OpenAlex,P01
+10.1109/smart55829.2022.10046773,IEEE,2022,SMART 2022,False,5,middle,Pontificia Universidad Católica del Perú,OpenAlex,P03
+10.1109/smart55829.2022.10047358,IEEE,2022,SMART 2022,True,2,middle,Universidad de San Martín de Porres,OpenAlex,P17
+10.1109/smart55829.2022.10047358,IEEE,2022,SMART 2022,True,5,middle,Universidad Tecnológica del Perú,OpenAlex,P02
+10.1109/smart55829.2022.10047390,IEEE,2022,SMART 2022,True,1,first,Universidad Nacional del Altiplano,OpenAlex,P05
+10.1109/smart55829.2022.10047779,IEEE,2022,SMART 2022,True,1,first,Universidad Tecnológica del Perú,OpenAlex,P02
+10.1109/smart55829.2022.10047779,IEEE,2022,SMART 2022,True,5,middle,Universidad César Vallejo,OpenAlex,P07
+10.1109/smart55829.2022.10047800,IEEE,2022,SMART 2022,True,1,first,Universidad Tecnológica del Perú,OpenAlex,P01
+10.1109/smart55829.2022.10047800,IEEE,2022,SMART 2022,True,2,middle,Universidad César Vallejo,OpenAlex,P18
+10.1109/smart55829.2022.10047800,IEEE,2022,SMART 2022,True,3,middle,Universidad César Vallejo,OpenAlex,P19
+10.1109/smart55829.2022.10047800,IEEE,2022,SMART 2022,True,4,middle,Universidad César Vallejo,OpenAlex,P07
+10.1109/smart55829.2022.10047800,IEEE,2022,SMART 2022,True,5,middle,Universidad Tecnológica del Perú,OpenAlex,P06
+10.1109/aisc56616.2023.10084964,IEEE,2023,AISC 2023,True,2,middle,Universidad Tecnológica del Perú,OpenAlex,P01
+10.1109/aisc56616.2023.10084980,IEEE,2023,AISC 2023,False,3,middle,Universidad Tecnológica del Perú,OpenAlex,P01
+10.1109/aisc56616.2023.10085137,IEEE,2023,AISC 2023,False,2,middle,Universidad Tecnológica del Perú,OpenAlex,P02
+10.1109/aisc56616.2023.10085139,IEEE,2023,AISC 2023,True,6,last,Pontificia Universidad Católica del Perú,OpenAlex,P03
+10.1109/aisc56616.2023.10085161,IEEE,2023,AISC 2023,False,6,last,Pontificia Universidad Católica del Perú,OpenAlex,P03
+10.1109/aisc56616.2023.10085175,IEEE,2023,AISC 2023,True,3,middle,Universidad Tecnológica del Perú,OpenAlex,P01
+10.1109/aisc56616.2023.10085360,IEEE,2023,AISC 2023,False,6,last,Pontificia Universidad Católica del Perú,OpenAlex,P03
+10.1109/aisc56616.2023.10085452,IEEE,2023,AISC 2023,True,1,first,Universidad Tecnológica del Perú,OpenAlex,P02
+10.1109/icacite57410.2023.10182477,IEEE,2023,ICACITE 2023,True,2,middle,Universidad Tecnológica del Perú,OpenAlex,P06
+10.1109/icacite57410.2023.10182605,IEEE,2023,ICACITE 2023,True,2,middle,Universidad Tecnológica del Perú,OpenAlex,P01
+10.1109/icacite57410.2023.10182641,IEEE,2023,ICACITE 2023,True,2,middle,Universidad Tecnológica del Perú,OpenAlex,P20
+10.1109/icacite57410.2023.10182814,IEEE,2023,ICACITE 2023,False,3,middle,Universidad Tecnológica del Perú,OpenAlex,P01
+10.1109/icacite57410.2023.10182975,IEEE,2023,ICACITE 2023,True,2,middle,Universidad Tecnológica del Perú,OpenAlex,P02
+10.1109/icacite57410.2023.10183129,IEEE,2023,ICACITE 2023,True,2,middle,Universidad Tecnológica del Perú,OpenAlex,P01
+10.1109/smarttechcon57526.2023.10391767,IEEE,2023,SMARTTECHCON 2023,False,3,middle,Universidad San Ignacio de Loyola,OpenAlex,P21
+10.1109/smarttechcon57526.2023.10391767,IEEE,2023,SMARTTECHCON 2023,False,5,middle,Universidad San Ignacio de Loyola,OpenAlex,P22
+10.1109/i-smac61858.2024.10714713,IEEE,2024,I-SMAC 2024,False,2,middle,National University of San Marcos,OpenAlex,P08
+10.1109/icdscnc62492.2024.10939783,IEEE,2024,ICDSCNC 2024,True,2,middle,National University of San Marcos,OpenAlex,P08
+10.1109/icspe62629.2024.10924323,IEEE,2024,ICSPE 2024,False,7,middle,Universidad Continental,OpenAlex,P23
+10.1109/iconstem65670.2025.11374809,IEEE,2025,ICONSTEM 2025,False,5,middle,National University of Saint Anthony the Abbot in Cuzco,OpenAlex,P24
+10.1016/j.matpr.2021.09.367,Otros,2021,,False,5,middle,Universidad Nacional de Moquegua,OpenAlex,P25
+10.1063/5.0218190,Otros,2024,,False,3,middle,Universidad Católica Santo Toribio de Mogrovejo,OpenAlex,P09
+10.1063/5.0218196,Otros,2024,,False,6,last,Universidad Nacional Autónoma de Huanta,OpenAlex,P05
+10.1063/5.0218198,Otros,2024,,False,6,last,Universidad Nacional del Altiplano,OpenAlex,P10
+10.1063/5.0218223,Otros,2024,,False,3,middle,Universidad Católica Santo Toribio de Mogrovejo,OpenAlex,P09
+10.1063/5.0218355,Otros,2024,,False,5,middle,Universidad Nacional del Altiplano,OpenAlex,P10
+10.1201/9781003405580-43,Otros,2024,,False,5,middle,Universidad Tecnológica del Perú,OpenAlex,P02
+10.1201/9781003405580-43,Otros,2024,,False,6,last,Pontificia Universidad Católica del Perú,OpenAlex,P03
+10.1109/icacite57410.2023.10182854,IEEE,2023,ICACITE 2023,True,1,first,Universidad Tecnológica del Perú,Revisión manual,P02

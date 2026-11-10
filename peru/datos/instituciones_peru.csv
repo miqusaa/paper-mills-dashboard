@@ -1,18 +1,18 @@
-﻿institucion,autorias,publicaciones,autorias_en_retractadas
-Universidad Tecnológica del Perú,31,30,24
-Pontificia Universidad Católica del Perú,9,9,5
-Universidad San Ignacio de Loyola,5,4,1
-Universidad Nacional del Altiplano,4,4,2
-Universidad César Vallejo,4,2,4
-Universidad Continental,2,2,1
-National University of San Marcos,2,2,1
-Universidad Católica Santo Toribio de Mogrovejo,2,2,0
-Universidad Nacional Santiago Antúnez de Mayolo,1,1,1
-Catholic University of Santa María,1,1,1
-Private University of the North,1,1,1
-Ministerio de Desarrollo Agrario y Riego,1,1,1
-Federico Villarreal National University,1,1,1
-Universidad de San Martín de Porres,1,1,1
-National University of Saint Anthony the Abbot in Cuzco,1,1,0
-Universidad Nacional de Moquegua,1,1,0
-Universidad Nacional Autónoma de Huanta,1,1,0
+﻿institucion,tipo_entidad,gestion,departamento,autorias,publicaciones,autorias_en_retractadas
+Universidad Tecnológica del Perú,Universidad,Privada,Lima,31,30,24
+Pontificia Universidad Católica del Perú,Universidad,Privada,Lima,9,9,5
+Universidad San Ignacio de Loyola,Universidad,Privada,Lima,5,4,1
+Universidad Nacional del Altiplano,Universidad,Pública,Puno,4,4,2
+Universidad César Vallejo,Universidad,Privada,La Libertad,4,2,4
+Universidad Continental,Universidad,Privada,Junín,2,2,1
+Universidad Nacional Mayor de San Marcos,Universidad,Pública,Lima,2,2,1
+Universidad Católica Santo Toribio de Mogrovejo,Universidad,Privada,Lambayeque,2,2,0
+Universidad Nacional Santiago Antúnez de Mayolo,Universidad,Pública,Áncash,1,1,1
+Universidad Católica de Santa María,Universidad,Privada,Arequipa,1,1,1
+Universidad Privada del Norte,Universidad,Privada,La Libertad,1,1,1
+Ministerio de Desarrollo Agrario y Riego,Entidad del Estado,Pública,Lima,1,1,1
+Universidad Nacional Federico Villarreal,Universidad,Pública,Lima,1,1,1
+Universidad de San Martín de Porres,Universidad,Privada,Lima,1,1,1
+Universidad Nacional de San Antonio Abad del Cusco,Universidad,Pública,Cusco,1,1,0
+Universidad Nacional de Moquegua,Universidad,Pública,Moquegua,1,1,0
+Universidad Nacional Autónoma de Huanta,Universidad,Pública,Ayacucho,1,1,0

@@ -1,0 +1,78 @@
+﻿grupo,doi,persona,institucion,orden_autor,n_autores,oferta_id,fecha_oferta,posiciones_disponibles,posiciones_reservadas,n_disponibles,en_posicion_ofertada,estado
+Incluida en las cifras,10.1109/iccike51210.2021.9410756,P12,Universidad Nacional Santiago Antúnez de Mayolo,3,6,,2021-02-23,"3, 5",,2,Sí,Disponible
+Incluida en las cifras,10.1016/j.matpr.2021.09.367,P25,Universidad Nacional de Moquegua,5,6,,2021-07-25,"2, 4","1, 3, 5, 6",2,Sí,Reservada o asignada
+Incluida en las cifras,10.1063/5.0218190,P09,Universidad Católica Santo Toribio de Mogrovejo,3,6,AIPCP - 01,2022-05-13,"2, 3, 5","1, 4, 6",3,Sí,Disponible
+Incluida en las cifras,10.1063/5.0218223,P09,Universidad Católica Santo Toribio de Mogrovejo,3,7,AIPCP - 05,2022-05-26,2,"1, 3, 4, 5, 6",1,Sí,Reservada o asignada
+Incluida en las cifras,10.1109/icses55317.2022.9914184,P03,Pontificia Universidad Católica del Perú,6,6,18,2022-06-11,"2, 3, 4, 6",,4,Sí,Disponible
+Incluida en las cifras,10.1063/5.0218355,P10,Universidad Nacional del Altiplano,5,6,AIPCP - 21,2022-06-24,5,"1, 2, 3, 4, 6",1,Sí,Disponible
+Incluida en las cifras,10.1063/5.0218196,P05,Universidad Nacional Autónoma de Huanta,6,6,AIPCP - 33,2022-06-27,"4, 5, 6","1, 2, 3",3,Sí,Disponible
+Incluida en las cifras,10.1063/5.0218198,P10,Universidad Nacional del Altiplano,6,6,AIPCP - 34,2022-06-27,"4, 5, 6","1, 2, 3",3,Sí,Disponible
+Incluida en las cifras,10.1109/ic3i56241.2022.10072999,P02,Universidad Tecnológica del Perú,1,6,49,2022-08-01,"1, 2, 3, 4, 5, 6",,6,Sí,Disponible
+Incluida en las cifras,10.1109/ic3i56241.2022.10072999,P14,Universidad Privada del Norte,4,6,49,2022-08-01,"1, 2, 3, 4, 5, 6",,6,Sí,Disponible
+Incluida en las cifras,10.1109/ic3i56241.2022.10073254,P15,Ministerio de Desarrollo Agrario y Riego,1,6,42,2022-08-01,"1, 2, 3, 4, 6",,5,Sí,Disponible
+Incluida en las cifras,10.1109/ic3i56241.2022.10073254,P01,Universidad Tecnológica del Perú,2,6,42,2022-08-01,"1, 2, 3, 4, 6",,5,Sí,Disponible
+Incluida en las cifras,10.1109/ic3i56241.2022.10073319,P02,Universidad Tecnológica del Perú,1,6,74,2022-08-20,"1, 3",,2,Sí,Disponible
+Incluida en las cifras,10.1109/smart55829.2022.10047358,P17,Universidad de San Martín de Porres,2,6,92,2022-08-27,"2, 3",,2,Sí,Disponible
+Incluida en las cifras,10.1109/aisc56616.2023.10084980,P01,Universidad Tecnológica del Perú,3,6,103,2022-08-28,"3, 4",,2,Sí,Disponible
+Incluida en las cifras,10.1109/aisc56616.2023.10085175,P01,Universidad Tecnológica del Perú,3,6,105,2022-08-28,"3, 4",,2,Sí,Disponible
+Incluida en las cifras,10.1109/ic3i56241.2022.10072499,P01,Universidad Tecnológica del Perú,3,6,102,2022-08-28,"3, 4",,2,Sí,Disponible
+Incluida en las cifras,10.1109/icacite57410.2023.10182814,P01,Universidad Tecnológica del Perú,3,6,104,2022-08-28,"3, 4",,2,Sí,Disponible
+Incluida en las cifras,10.1109/aisc56616.2023.10085161,P03,Pontificia Universidad Católica del Perú,6,6,119,2022-09-07,"1, 2, 5, 6",,4,Sí,Disponible
+Incluida en las cifras,10.1109/smart55829.2022.10046773,P03,Pontificia Universidad Católica del Perú,5,6,129,2022-09-07,"1, 2, 5",,3,Sí,Disponible
+Incluida en las cifras,10.1109/smart55829.2022.10047800,P01,Universidad Tecnológica del Perú,1,6,135,2022-10-25,"3, 4","1, 2, 5, 6",2,Sí,Reservada o asignada
+Incluida en las cifras,10.1109/smart55829.2022.10047800,P18,Universidad César Vallejo,2,6,135,2022-10-25,"3, 4","1, 2, 5, 6",2,Sí,Reservada o asignada
+Incluida en las cifras,10.1109/smart55829.2022.10047800,P19,Universidad César Vallejo,3,6,135,2022-10-25,"3, 4","1, 2, 5, 6",2,Sí,Disponible
+Incluida en las cifras,10.1109/smart55829.2022.10047800,P07,Universidad César Vallejo,4,6,135,2022-10-25,"3, 4","1, 2, 5, 6",2,Sí,Disponible
+Incluida en las cifras,10.1109/smart55829.2022.10047800,P06,Universidad Tecnológica del Perú,5,6,135,2022-10-25,"3, 4","1, 2, 5, 6",2,Sí,Reservada o asignada
+Incluida en las cifras,10.1109/aisc56616.2023.10084964,P01,Universidad Tecnológica del Perú,2,6,182,2022-11-12,2,"1, 3, 4, 5, 6",1,Sí,Disponible
+Incluida en las cifras,10.1109/aisc56616.2023.10085137,P02,Universidad Tecnológica del Perú,2,6,158,2022-11-12,2,"1, 3, 4, 5, 6",1,Sí,Disponible
+Incluida en las cifras,10.1109/ic3i56241.2022.10073324,P06,Universidad Tecnológica del Perú,2,6,150,2022-11-12,2,"1, 3, 4, 5, 6",1,Sí,Disponible
+Incluida en las cifras,10.1109/ic3i56241.2022.10073324,P03,Pontificia Universidad Católica del Perú,6,6,150,2022-11-12,2,"1, 3, 4, 5, 6",1,Sí,Reservada o asignada
+Incluida en las cifras,10.1109/icacite57410.2023.10182477,P06,Universidad Tecnológica del Perú,2,6,155,2022-11-12,2,"1, 3, 4, 5, 6",1,Sí,Disponible
+Incluida en las cifras,10.1109/icacite57410.2023.10182605,P01,Universidad Tecnológica del Perú,2,6,179,2022-11-12,2,"1, 3, 4, 5, 6",1,Sí,Disponible
+Incluida en las cifras,10.1109/icacite57410.2023.10182641,P20,Universidad Tecnológica del Perú,2,6,163,2022-11-12,2,"1, 3, 4, 5, 6",1,Sí,Disponible
+Incluida en las cifras,10.1109/icacite57410.2023.10182975,P02,Universidad Tecnológica del Perú,2,6,169,2022-11-12,2,"1, 3, 4, 5, 6",1,Sí,Disponible
+Incluida en las cifras,10.1109/icacite57410.2023.10183129,P01,Universidad Tecnológica del Perú,2,6,165,2022-11-12,2,"1, 3, 4, 5, 6",1,Sí,Disponible
+Incluida en las cifras,10.1109/smarttechcon57526.2023.10391767,P21,Universidad San Ignacio de Loyola,3,6,,2023-05-29,"1, 2, 3, 4, 5, 6",,6,Sí,Disponible
+Incluida en las cifras,10.1109/smarttechcon57526.2023.10391767,P22,Universidad San Ignacio de Loyola,5,6,,2023-05-29,"1, 2, 3, 4, 5, 6",,6,Sí,Disponible
+Incluida en las cifras,10.1109/iconstem65670.2025.11374809,P24,Universidad Nacional de San Antonio Abad del Cusco,5,6,5,2023-07-10,"1, 2, 3, 4, 5, 6",,6,Sí,Disponible
+Incluida en las cifras,10.1109/i-smac61858.2024.10714713,P08,Universidad Nacional Mayor de San Marcos,2,6,,2024-07-21,"2, 3, 4, 5, 6",,5,Sí,Disponible
+Incluida en las cifras,10.1109/icspe62629.2024.10924323,P23,Universidad Continental,7,8,IEEE-07-012,2024-09-29,,"1, 2, 3, 4, 5, 6, 7",0,Sí,Reservada o asignada
+Incluida en las cifras,10.1109/i-smac52330.2021.9640851,P11,Universidad Continental,3,6,,2021-06-21,"1, 2",,2,No,No ofertada
+Incluida en las cifras,10.1109/iceca52323.2021.9675995,P13,Universidad Católica de Santa María,3,6,,2021-06-21,"1, 2",,2,No,No ofertada
+Incluida en las cifras,10.1109/icses55317.2022.9914050,P01,Universidad Tecnológica del Perú,4,6,11,2022-06-11,3,,1,No,No ofertada
+Incluida en las cifras,10.1109/icses55317.2022.9914062,P01,Universidad Tecnológica del Perú,1,6,1,2022-06-11,3,,1,No,No ofertada
+Incluida en las cifras,10.1109/icses55317.2022.9914062,P04,Universidad San Ignacio de Loyola,4,6,1,2022-06-11,3,,1,No,No ofertada
+Incluida en las cifras,10.1109/icses55317.2022.9914139,P01,Universidad Tecnológica del Perú,1,6,27,2022-06-11,"2, 3",,2,No,No ofertada
+Incluida en las cifras,10.1109/icses55317.2022.9914139,P04,Universidad San Ignacio de Loyola,4,6,27,2022-06-11,"2, 3",,2,No,No ofertada
+Incluida en las cifras,10.1109/icses55317.2022.9914143,P01,Universidad Tecnológica del Perú,5,6,24,2022-06-11,"2, 3, 4",,3,No,No ofertada
+Incluida en las cifras,10.1109/icses55317.2022.9914167,P01,Universidad Tecnológica del Perú,5,6,16,2022-06-11,"2, 3, 4",,3,No,No ofertada
+Incluida en las cifras,10.1109/icses55317.2022.9914246,P01,Universidad Tecnológica del Perú,5,6,23,2022-06-11,"3, 4",,2,No,No ofertada
+Incluida en las cifras,10.1109/ic3i56241.2022.10072600,P01,Universidad Tecnológica del Perú,1,6,33,2022-08-01,"2, 3, 4",,3,No,No ofertada
+Incluida en las cifras,10.1109/ic3i56241.2022.10072600,P04,Universidad San Ignacio de Loyola,5,6,33,2022-08-01,"2, 3, 4",,3,No,No ofertada
+Incluida en las cifras,10.1109/smart55829.2022.10047779,P02,Universidad Tecnológica del Perú,1,6,50,2022-08-01,"2, 3, 4, 6",,4,No,No ofertada
+Incluida en las cifras,10.1109/smart55829.2022.10047779,P07,Universidad César Vallejo,5,6,50,2022-08-01,"2, 3, 4, 6",,4,No,No ofertada
+Incluida en las cifras,10.1109/ic3i56241.2022.10072741,P05,Universidad Nacional del Altiplano,1,6,57,2022-08-20,"2, 3",,2,No,No ofertada
+Incluida en las cifras,10.1109/ic3i56241.2022.10072980,P03,Pontificia Universidad Católica del Perú,4,6,73,2022-08-20,"2, 3",,2,No,No ofertada
+Incluida en las cifras,10.1109/ic3i56241.2022.10073319,P16,Universidad Nacional Federico Villarreal,4,6,74,2022-08-20,"1, 3",,2,No,No ofertada
+Incluida en las cifras,10.1109/smart55829.2022.10047390,P05,Universidad Nacional del Altiplano,1,6,79,2022-08-20,2,,1,No,No ofertada
+Incluida en las cifras,10.1109/aisc56616.2023.10085452,P02,Universidad Tecnológica del Perú,1,6,93,2022-08-27,"2, 3",,2,No,No ofertada
+Incluida en las cifras,10.1109/ic3i56241.2022.10073395,P02,Universidad Tecnológica del Perú,1,6,94,2022-08-27,"2, 3",,2,No,No ofertada
+Incluida en las cifras,10.1109/icacite57410.2023.10182854,P02,Universidad Tecnológica del Perú,1,6,91,2022-08-27,"2, 3",,2,No,No ofertada
+Incluida en las cifras,10.1109/smart55829.2022.10047358,P02,Universidad Tecnológica del Perú,5,6,92,2022-08-27,"2, 3",,2,No,No ofertada
+Incluida en las cifras,10.1109/aisc56616.2023.10085139,P03,Pontificia Universidad Católica del Perú,6,6,116,2022-08-28,"2, 3",,2,No,No ofertada
+Incluida en las cifras,10.1109/ic3i56241.2022.10073429,P03,Pontificia Universidad Católica del Perú,6,6,114,2022-08-28,"2, 4",,2,No,No ofertada
+Incluida en las cifras,10.1201/9781003405580-43,P02,Universidad Tecnológica del Perú,5,6,Title 15,2022-10-27,"2, 3, 4",,3,No,No ofertada
+Incluida en las cifras,10.1201/9781003405580-43,P03,Pontificia Universidad Católica del Perú,6,6,Title 15,2022-10-27,"2, 3, 4",,3,No,No ofertada
+Incluida en las cifras,10.1109/aisc56616.2023.10085360,P03,Pontificia Universidad Católica del Perú,6,6,115,2022-10-30,"1, 2",,2,No,No ofertada
+Incluida en las cifras,10.1109/ic3i56241.2022.10072925,P02,Universidad Tecnológica del Perú,4,6,2,2022-12-01,"2, 3",,2,No,No ofertada
+Incluida en las cifras,10.1109/icdscnc62492.2024.10939783,P08,Universidad Nacional Mayor de San Marcos,2,6,,2024-07-30,"3, 4, 5",,3,No,No ofertada
+Sin afiliación peruana (aparte),10.1063/5.0218356,P03,(sin afiliación peruana declarada),6,6,AIPCP - 32,2022-06-16,2,"1, 3, 4, 5, 6",1,Sí,Reservada o asignada
+Sin afiliación peruana (aparte),10.1201/9781003405580-25,P03,(sin afiliación peruana declarada),6,6,Title 7,2022-10-17,"1, 2, 3, 4, 5, 6",,6,Sí,Disponible
+Sin afiliación peruana (aparte),10.1201/9781003405580-86,P03,(sin afiliación peruana declarada),6,6,Title 6,2022-10-17,"1, 2, 3, 4, 5, 6",,6,Sí,Disponible
+Sin afiliación peruana (aparte),10.1201/9781003405580-22,P02,(sin afiliación peruana declarada),5,6,Title 17,2022-10-27,"2, 3, 4",,3,No,No ofertada
+Sin afiliación peruana (aparte),10.1201/9781003405580-22,P03,(sin afiliación peruana declarada),6,6,Title 17,2022-10-27,"2, 3, 4",,3,No,No ofertada
+Sin afiliación peruana (aparte),10.1201/9781003405580-30,P01,(sin afiliación peruana declarada),6,6,Title 13,2022-10-27,3,,1,No,No ofertada
+Sin afiliación peruana (aparte),10.1201/9781003405580-50,P01,(sin afiliación peruana declarada),6,6,Title 12,2022-10-27,"3, 5",,2,No,No ofertada
+Sin afiliación peruana (aparte),10.1201/9781003405580-74,P02,(sin afiliación peruana declarada),5,6,Title 16,2022-10-27,"3, 4",,2,No,No ofertada
+Sin afiliación peruana (aparte),10.1201/9781003405580-74,P03,(sin afiliación peruana declarada),6,6,Title 16,2022-10-27,"3, 4",,2,No,No ofertada
